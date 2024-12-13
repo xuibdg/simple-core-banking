@@ -2,50 +2,50 @@ package com.b2camp.simple_core_banking.entity;
 
 import jakarta.persistence.Column;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public abstract class BaseReference {
     @Column(name = "created_by")
-    private String createdBy;
+    private MUser createdBy;
 
     @Column(name = "created_at", columnDefinition = "timestamp(6)")
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "update_by", length = 70)
-    private String updateBy;
+    private MUser updateBy;
 
     @Column(name = "update_at", columnDefinition = "timestamp(6)")
-    private LocalDateTime updateAt;
+    private Timestamp updateAt;
 
-    public String getCreatedBy() {
+    public MUser getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(MUser createdBy) {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdateBy() {
+    public MUser getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(String updateBy) {
+    public void setUpdateBy(MUser updateBy) {
         this.updateBy = updateBy;
     }
 
-    public LocalDateTime getUpdateAt() {
+    public Timestamp getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(LocalDateTime updateAt) {
+    public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
     }
 }
