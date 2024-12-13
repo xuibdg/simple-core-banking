@@ -28,4 +28,5 @@ public class TSavingAccountRequest {
     public void setSavingId(String savingId) {
         this.savingId = savingId;
     }
+
 }

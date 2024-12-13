@@ -11,6 +11,7 @@ public class TSavingAccountResponse {
     private BigDecimal endBalance ;
     private BigDecimal currentBalance;
     private String statusId;
+    private String statusName;
     private boolean isDeleted;
     private LocalDateTime authorizationAt;
     private String authorizationBy;
@@ -18,6 +19,15 @@ public class TSavingAccountResponse {
     private String savingName;
 
     //
+
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
 
     public String getSavingAccountId() {
         return savingAccountId;
@@ -114,4 +124,5 @@ public class TSavingAccountResponse {
     public void setSavingName(String savingName) {
         this.savingName = savingName;
     }
+
 }

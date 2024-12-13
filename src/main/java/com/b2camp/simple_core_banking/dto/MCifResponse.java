@@ -23,10 +23,7 @@ public class MCifResponse {
     private String statusId;
     private String statusName;
 
-    public String getCifId() {
-
-        return cifId;
-    }
+    public String getCifId() { return cifId; }
 
     public void setCifId(String cifId) {
         this.cifId = cifId;

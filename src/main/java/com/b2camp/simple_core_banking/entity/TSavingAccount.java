@@ -21,7 +21,7 @@ public class TSavingAccount extends BaseReference {
 
     @ManyToOne
     @JoinColumn(name = "cif_id", referencedColumnName = "cif_id")
-    private MCif mCifId;
+    private MCif mCif;
 
     @Column(name = "begin_balance", nullable = false)
     private BigDecimal beginBalance;
@@ -39,15 +39,16 @@ public class TSavingAccount extends BaseReference {
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
 
-    @Column(name = "authorization_at", nullable = false)
+    @Column(name = "authorization_at")
     private LocalDateTime authorizationAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "authorization_by", referencedColumnName = "user_id")
     private MUser mUserAuthorizationBy;
 
-    @Column(name = "saving_id", nullable = false)
-    private String savingId;
+    @ManyToOne
+    @JoinColumn (name = "saving_id", referencedColumnName = "saving_id")
+    private MSaving mSaving;
 
     // No-argument constructor
     public TSavingAccount() {
@@ -56,10 +57,10 @@ public class TSavingAccount extends BaseReference {
     // All-argument constructor
     public TSavingAccount(String savingAccountId, String accountNumber, MCif mCifId, BigDecimal beginBalance,
                           BigDecimal endBalance, BigDecimal currentBalance, RStatus rStatus, boolean isDeleted,
-                          LocalDateTime authorizationAt, MUser mUserAuthorizationBy, String savingId) {
+                          LocalDateTime authorizationAt, MUser mUserAuthorizationBy, MSaving savingId) {
         this.savingAccountId = savingAccountId;
         this.accountNumber = accountNumber;
-        this.mCifId = mCifId;
+        this.mCif = mCifId;
         this.beginBalance = beginBalance;
         this.endBalance = endBalance;
         this.currentBalance = currentBalance;
@@ -67,7 +68,7 @@ public class TSavingAccount extends BaseReference {
         this.isDeleted = isDeleted;
         this.authorizationAt = authorizationAt;
         this.mUserAuthorizationBy = mUserAuthorizationBy;
-        this.savingId = savingId;
+        this.mSaving = savingId;
     }
 
     //Getter and Setter
@@ -87,12 +88,12 @@ public class TSavingAccount extends BaseReference {
         this.accountNumber = accountNumber;
     }
 
-    public MCif getmCifId() {
-        return mCifId;
+    public MCif getMCif() {
+        return mCif;
     }
 
-    public void setmCifId(MCif mCifId) {
-        this.mCifId = mCifId;
+    public void setMCif(MCif mcif) {
+        this.mCif = mcif;
     }
 
     public boolean isDeleted() {
@@ -101,10 +102,6 @@ public class TSavingAccount extends BaseReference {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
-    }
-
-    public void setSavingId(String savingId) {
-        this.savingId = savingId;
     }
 
     public RStatus getrStatus() {
@@ -163,11 +160,13 @@ public class TSavingAccount extends BaseReference {
         this.authorizationAt = authorizationAt;
     }
 
-    public String getSavingId() {
-        return savingId;
+    public MSaving getMSaving() {
+        return mSaving;
     }
 
-    public void setSavungId(String savingId) {
-        this.savingId = savingId;
+    public void setMSaving(MSaving mSaving) {
+        this.mSaving = mSaving;
     }
+
+
 }
