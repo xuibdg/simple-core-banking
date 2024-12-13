@@ -45,7 +45,7 @@ public class MCif extends BaseReference {
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private RStatus rStatus;
 
-    @Column(name = "authorization_at", nullable = false)
+    @Column(name = "authorization_at")
     private Timestamp authorizationAt;
 
     @ManyToOne

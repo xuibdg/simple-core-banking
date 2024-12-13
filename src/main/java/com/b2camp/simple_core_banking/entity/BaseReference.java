@@ -8,13 +8,13 @@ public abstract class BaseReference {
     @Column(name = "created_by")
     private MUser createdBy;
 
-    @Column(name = "created_at", columnDefinition = "timestamp(6)")
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
     @Column(name = "update_by", length = 70)
     private MUser updateBy;
 
-    @Column(name = "update_at", columnDefinition = "timestamp(6)")
+    @Column(name = "update_at")
     private Timestamp updateAt;
 
     // No-argument constructor
