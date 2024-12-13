@@ -3,8 +3,6 @@ package com.b2camp.simple_core_banking.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "m_user", schema = "public")
 public class MUser extends BaseReference {
@@ -26,9 +24,6 @@ public class MUser extends BaseReference {
 
     @Column(name = "password", length = 255)
     private String password;
-
-    @Column(name = "user_role_id", length = 70)
-    private String userRoleId;
 
     @Column(name = "fullname", length = 100)
     private String fullname;
@@ -84,12 +79,12 @@ public class MUser extends BaseReference {
         this.password = password;
     }
 
-    public String getUserRoleId() {
-        return userRoleId;
+    public MUserRole getMUserRole() {
+        return mUserRole;
     }
 
-    public void setUserRoleId(String userRoleId) {
-        this.userRoleId = userRoleId;
+    public void setMUserRole(MUserRole mUserRole) {
+        this.mUserRole = mUserRole;
     }
 
     public String getFullname() {

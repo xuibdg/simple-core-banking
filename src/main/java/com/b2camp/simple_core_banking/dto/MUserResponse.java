@@ -40,11 +40,11 @@ public class MUserResponse {
         this.userName = userName;
     }
 
-    public String getUserRoleId() {
+    public String getUserRole() {
         return userRoleId;
     }
 
-    public void setUserRoleId(String userRoleId) {
+    public void setUserRole(String userRoleId) {
         this.userRoleId = userRoleId;
     }
 
