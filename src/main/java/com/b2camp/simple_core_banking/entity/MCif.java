@@ -3,6 +3,7 @@ package com.b2camp.simple_core_banking.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
@@ -43,6 +44,13 @@ public class MCif extends BaseReference {
     @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private RStatus rStatus;
+
+    @Column(name = "authorization_at", nullable = false)
+    private Timestamp authorization_at;
+
+    @ManyToOne
+    @JoinColumn(name = "authorization_by", referencedColumnName = "user_id")
+    private MUser mUserAuthorizationBy;
 
 
     public String getCifId() {
@@ -127,4 +135,19 @@ public class MCif extends BaseReference {
         return rStatus;
     }
 
+    public Timestamp getAuthorization_at() {
+        return authorization_at;
+    }
+
+    public void setAuthorization_at(Timestamp authorization_at) {
+        this.authorization_at = authorization_at;
+    }
+
+    public MUser getmUserAuthorizationBy() {
+        return mUserAuthorizationBy;
+    }
+
+    public void setmUserAuthorizationBy(MUser mUserAuthorizationBy) {
+        this.mUserAuthorizationBy = mUserAuthorizationBy;
+    }
 }
