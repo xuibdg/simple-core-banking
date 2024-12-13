@@ -46,11 +46,33 @@ public class MCif extends BaseReference {
     private RStatus rStatus;
 
     @Column(name = "authorization_at", nullable = false)
-    private Timestamp authorization_at;
+    private Timestamp authorizationAt;
 
     @ManyToOne
     @JoinColumn(name = "authorization_by", referencedColumnName = "user_id")
     private MUser mUserAuthorizationBy;
+
+    // No-argument constructor
+    public MCif() {
+    }
+
+    // All-argument constructor
+    public MCif(String cifId, String customerName, LocalDate dateOfBirth, String address, String phoneNumber,
+                String email, String idNumber, RNumberType rNumberType, boolean isDeleted, RStatus rStatus,
+                Timestamp authorizationAt, MUser mUserAuthorizationBy, String createdBy) {
+        this.cifId = cifId;
+        this.customerName = customerName;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.idNumber = idNumber;
+        this.rNumberType = rNumberType;
+        this.isDeleted = isDeleted;
+        this.rStatus = rStatus;
+        this.authorizationAt = authorizationAt;
+        this.mUserAuthorizationBy = mUserAuthorizationBy;
+    }
 
 
     public String getCifId() {
@@ -136,11 +158,11 @@ public class MCif extends BaseReference {
     }
 
     public Timestamp getAuthorization_at() {
-        return authorization_at;
+        return authorizationAt;
     }
 
     public void setAuthorization_at(Timestamp authorization_at) {
-        this.authorization_at = authorization_at;
+        this.authorizationAt = authorization_at;
     }
 
     public MUser getmUserAuthorizationBy() {

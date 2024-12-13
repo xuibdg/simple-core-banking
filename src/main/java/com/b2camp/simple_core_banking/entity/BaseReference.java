@@ -17,6 +17,18 @@ public abstract class BaseReference {
     @Column(name = "update_at", columnDefinition = "timestamp(6)")
     private Timestamp updateAt;
 
+    // No-argument constructor
+    public BaseReference() {
+    }
+
+    // All-argument constructor
+    public BaseReference(MUser createdBy, Timestamp createdAt, MUser updateBy, Timestamp updateAt) {
+        this.createdBy = createdBy;
+        this.createdAt = createdAt;
+        this.updateBy = updateBy;
+        this.updateAt = updateAt;
+    }
+
     public MUser getCreatedBy() {
         return createdBy;
     }

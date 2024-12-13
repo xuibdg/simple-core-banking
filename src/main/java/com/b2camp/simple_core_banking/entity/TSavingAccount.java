@@ -49,6 +49,27 @@ public class TSavingAccount extends BaseReference {
     @Column(name = "saving_id", nullable = false)
     private String savingId;
 
+    // No-argument constructor
+    public TSavingAccount() {
+    }
+
+    // All-argument constructor
+    public TSavingAccount(String savingAccountId, String accountNumber, MCif mCifId, BigDecimal beginBalance,
+                          BigDecimal endBalance, BigDecimal currentBalance, RStatus rStatus, boolean isDeleted,
+                          LocalDateTime authorizationAt, MUser mUserAuthorizationBy, String savingId) {
+        this.savingAccountId = savingAccountId;
+        this.accountNumber = accountNumber;
+        this.mCifId = mCifId;
+        this.beginBalance = beginBalance;
+        this.endBalance = endBalance;
+        this.currentBalance = currentBalance;
+        this.rStatus = rStatus;
+        this.isDeleted = isDeleted;
+        this.authorizationAt = authorizationAt;
+        this.mUserAuthorizationBy = mUserAuthorizationBy;
+        this.savingId = savingId;
+    }
+
     //Getter and Setter
     public String getSavingAccountId() {
         return savingAccountId;
