@@ -32,7 +32,7 @@ public class TSavingAccount extends BaseReference {
     @Column(name = "current_balance", nullable = false)
     private BigDecimal currentBalance;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private RStatus rStatus;
 
@@ -42,7 +42,7 @@ public class TSavingAccount extends BaseReference {
     @Column(name = "authorization_at", nullable = false)
     private LocalDateTime authorizationAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "authorization_by", referencedColumnName = "user_id")
     private MUser mUserAuthorizationBy;
 

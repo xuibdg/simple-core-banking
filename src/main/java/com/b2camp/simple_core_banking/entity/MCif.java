@@ -34,21 +34,21 @@ public class MCif extends BaseReference {
     @Column(name = "id_number", nullable = false, length = 50)
     private String idNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_number_type", referencedColumnName = "type_id")
     private RNumberType rNumberType;
 
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private RStatus rStatus;
 
     @Column(name = "authorization_at")
     private Timestamp authorizationAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "authorization_by", referencedColumnName = "user_id")
     private MUser mUserAuthorizationBy;
 
