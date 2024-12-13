@@ -13,7 +13,7 @@ public class MCif extends BaseReference {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "cif_id", nullable = false, length = 20)
+    @Column(name = "cif_id", nullable = false)
     private String cifId;
 
     @Column(name = "customer_name", nullable = false, length = 100)
