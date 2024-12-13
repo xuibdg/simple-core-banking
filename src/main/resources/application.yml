@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ep-fancy-morning-a5hll4t3.us-east-2.aws.neon.tech/staging
+    username: staging_owner
+    password: aJx4phzBVSK5
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update  # Gunakan 'update' untuk pengembangan, 'none' untuk produksi
+  hikari:
+    pool-name: HikariCP
+    maximum-pool-size: 10
+    minimum-idle: 5
+    idle-timeout: 30000
+    max-lifetime: 60000
+    connection-timeout: 30000
+    validation-timeout: 5000
+
+# Menambahkan port untuk aplikasi
+server:
+  port: 8080  # Gantilah dengan port yang Anda inginkan, misalnya 8081
