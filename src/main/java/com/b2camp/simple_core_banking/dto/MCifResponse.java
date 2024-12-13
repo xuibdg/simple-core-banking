@@ -1,5 +1,6 @@
 package com.b2camp.simple_core_banking.dto;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -158,5 +159,9 @@ public class MCifResponse {
 
     public void setStatusName(String statusName) {
         this.statusName = statusName;
+    }
+
+    public void getAuthorizationAt(Timestamp authorizationAt) {
+
     }
 }
