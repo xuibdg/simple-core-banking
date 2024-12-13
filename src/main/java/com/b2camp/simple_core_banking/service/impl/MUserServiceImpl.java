@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class MUserServiceImpl implements MUserService {
+public class   MUserServiceImpl implements MUserService {
 
     @Autowired
     private MUserRepository mUserRepository;
