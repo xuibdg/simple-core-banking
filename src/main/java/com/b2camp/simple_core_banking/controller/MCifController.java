@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/request")
-public class McifController {
+public class MCifController {
 
     private MCifService mCifService;
 
-    McifController(MCifService mCifService) {
+    MCifController(MCifService mCifService) {
         this.mCifService = mCifService;
     }
 
