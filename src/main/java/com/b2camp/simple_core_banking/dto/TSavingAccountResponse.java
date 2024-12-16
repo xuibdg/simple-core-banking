@@ -8,7 +8,7 @@ public class TSavingAccountResponse {
     private String accountNumber;
     private String cifId;
     private BigDecimal beginBalance;
-    private BigDecimal endBalance ;
+    private BigDecimal endBalance;
     private BigDecimal currentBalance;
     private String statusId;
     private boolean isDeleted;
@@ -113,5 +113,9 @@ public class TSavingAccountResponse {
 
     public void setSavingName(String savingName) {
         this.savingName = savingName;
+    }
+
+    public void setStatus(String authorized) {
+
     }
 }

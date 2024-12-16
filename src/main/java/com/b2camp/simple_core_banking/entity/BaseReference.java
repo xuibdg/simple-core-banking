@@ -8,11 +8,13 @@ public abstract class BaseReference {
     @Column(name = "created_by")
     private MUser createdBy;
 
+
     @Column(name = "created_at")
     private Timestamp createdAt;
 
     @Column(name = "update_by", length = 70)
     private MUser updateBy;
+
 
     @Column(name = "update_at")
     private Timestamp updateAt;
@@ -27,6 +29,7 @@ public abstract class BaseReference {
         this.createdAt = createdAt;
         this.updateBy = updateBy;
         this.updateAt = updateAt;
+
     }
 
     public MUser getCreatedBy() {
@@ -60,4 +63,6 @@ public abstract class BaseReference {
     public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
     }
+
+
 }

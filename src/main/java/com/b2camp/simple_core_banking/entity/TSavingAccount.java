@@ -5,7 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "t_saving_account", schema = "public")
@@ -28,7 +27,7 @@ public class TSavingAccount extends BaseReference {
     private BigDecimal beginBalance;
 
     @Column(name = "end_balance", nullable = false)
-    private BigDecimal endBalance ;
+    private BigDecimal endBalance;
 
     @Column(name = "current_balance", nullable = false)
     private BigDecimal currentBalance;
@@ -148,7 +147,6 @@ public class TSavingAccount extends BaseReference {
     public void setCurrentBalance(BigDecimal currentBalance) {
         this.currentBalance = currentBalance;
     }
-
 
 
     public Timestamp getAuthorizationAt() {
