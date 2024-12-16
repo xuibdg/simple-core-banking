@@ -1,5 +1,6 @@
 package com.b2camp.simple_core_banking.dto;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -128,8 +129,8 @@ public class MCifResponse {
         this.upDateBy = upDateBy;
     }
 
-    public LocalDateTime getAuthorizationAt() {
-        return authorizationAt;
+    public LocalDateTime getAuthorizationAt(LocalDateTime authorizationAt) {
+        return this.authorizationAt;
     }
 
     public void setAuthorizationAt(LocalDateTime authorizationAt) {
@@ -158,5 +159,8 @@ public class MCifResponse {
 
     public void setStatusName(String statusName) {
         this.statusName = statusName;
+    }
+
+    public void getAuthorizationAt(Timestamp authorizationAt) {
     }
 }

@@ -19,4 +19,4 @@ spring:
 
 # Menambahkan port untuk aplikasi
 server:
-  port: 8080  # Gantilah dengan port yang Anda inginkan, misalnya 8081
+  port: 8080  # Gantilah dengan port yang Anda inginkan, misalnya 8081

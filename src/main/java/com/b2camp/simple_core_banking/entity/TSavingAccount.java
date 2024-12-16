@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,17 +20,17 @@ public class TSavingAccount extends BaseReference {
     @Column(name = "account_number", nullable = false)
     private String accountNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cif_id", referencedColumnName = "cif_id")
     private MCif mCifId;
 
-    @Column(name = "begin_balance", nullable = false)
+    @Column(name = "begin_balance")
     private BigDecimal beginBalance;
 
-    @Column(name = "end_balance", nullable = false)
-    private BigDecimal endBalance ;
+    @Column(name = "end_balance")
+    private BigDecimal endBalance;
 
-    @Column(name = "current_balance", nullable = false)
+    @Column(name = "current_balance")
     private BigDecimal currentBalance;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -39,7 +40,7 @@ public class TSavingAccount extends BaseReference {
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
 
-    @Column(name = "authorization_at", nullable = false)
+    @Column(name = "authorization_at")
     private LocalDateTime authorizationAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -48,6 +49,10 @@ public class TSavingAccount extends BaseReference {
 
     @Column(name = "saving_id", nullable = false)
     private String savingId;
+
+    @Column(name = "updated_at")
+    private Timestamp updateAt;
+
 
     // No-argument constructor
     public TSavingAccount() {
@@ -87,11 +92,7 @@ public class TSavingAccount extends BaseReference {
         this.accountNumber = accountNumber;
     }
 
-    public MCif getmCifId() {
-        return mCifId;
-    }
-
-    public void setmCifId(MCif mCifId) {
+    public void setmCifId() {
         this.mCifId = mCifId;
     }
 
@@ -123,24 +124,12 @@ public class TSavingAccount extends BaseReference {
         this.mUserAuthorizationBy = mUserAuthorizationBy;
     }
 
-    public BigDecimal getBeginBalance() {
-        return beginBalance;
-    }
-
     public void setBeginBalance(BigDecimal beginBalance) {
         this.beginBalance = beginBalance;
     }
 
-    public BigDecimal getEndBalance() {
-        return endBalance;
-    }
-
     public void setEndBalance(BigDecimal endBalance) {
         this.endBalance = endBalance;
-    }
-
-    public BigDecimal getCurrentBalance() {
-        return currentBalance;
     }
 
     public void setCurrentBalance(BigDecimal currentBalance) {
@@ -163,11 +152,36 @@ public class TSavingAccount extends BaseReference {
         this.authorizationAt = authorizationAt;
     }
 
+
     public String getSavingId() {
         return savingId;
     }
 
     public void setSavungId(String savingId) {
         this.savingId = savingId;
+    }
+
+    public MCif getmCifId() {
+        return mCifId;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public BigDecimal getBeginBalance(String s) {
+        return beginBalance;
+    }
+
+    public BigDecimal getEndBalance(String a) {
+        return endBalance;
+    }
+
+    public BigDecimal getCurrentBalance(String s) {
+        return currentBalance;
     }
 }

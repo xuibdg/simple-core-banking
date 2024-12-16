@@ -8,16 +8,14 @@ public class TSavingAccountResponse {
     private String accountNumber;
     private String cifId;
     private BigDecimal beginBalance;
-    private BigDecimal endBalance ;
+    private BigDecimal endBalance;
     private BigDecimal currentBalance;
     private String statusId;
     private boolean isDeleted;
     private LocalDateTime authorizationAt;
     private String authorizationBy;
     private String savingId;
-    private String savingName;
 
-    //
 
     public String getSavingAccountId() {
         return savingAccountId;
@@ -107,11 +105,4 @@ public class TSavingAccountResponse {
         this.savingId = savingId;
     }
 
-    public String getSavingName() {
-        return savingName;
-    }
-
-    public void setSavingName(String savingName) {
-        this.savingName = savingName;
-    }
 }

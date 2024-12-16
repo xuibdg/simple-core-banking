@@ -3,8 +3,8 @@ package com.b2camp.simple_core_banking.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "m_cif", schema = "public")
@@ -46,7 +46,7 @@ public class MCif extends BaseReference {
     private RStatus rStatus;
 
     @Column(name = "authorization_at")
-    private Timestamp authorizationAt;
+    private LocalDateTime authorizationAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "authorization_by", referencedColumnName = "user_id")
@@ -58,8 +58,7 @@ public class MCif extends BaseReference {
 
     // All-argument constructor
     public MCif(String cifId, String customerName, LocalDate dateOfBirth, String address, String phoneNumber,
-                String email, String idNumber, RNumberType rNumberType, boolean isDeleted, RStatus rStatus,
-                Timestamp authorizationAt, MUser mUserAuthorizationBy, String createdBy) {
+                String email, String idNumber, RNumberType rNumberType, boolean isDeleted, RStatus rStatus) {
         this.cifId = cifId;
         this.customerName = customerName;
         this.dateOfBirth = dateOfBirth;
@@ -70,13 +69,11 @@ public class MCif extends BaseReference {
         this.rNumberType = rNumberType;
         this.isDeleted = isDeleted;
         this.rStatus = rStatus;
-        this.authorizationAt = authorizationAt;
-        this.mUserAuthorizationBy = mUserAuthorizationBy;
+
     }
 
 
     public String getCifId() {
-
         return cifId;
     }
 
@@ -157,11 +154,11 @@ public class MCif extends BaseReference {
         return rStatus;
     }
 
-    public Timestamp getAuthorization_at() {
+    public LocalDateTime getAuthorization_at() {
         return authorizationAt;
     }
 
-    public void setAuthorization_at(Timestamp authorization_at) {
+    public void setAuthorization_at(LocalDateTime authorization_at) {
         this.authorizationAt = authorization_at;
     }
 
