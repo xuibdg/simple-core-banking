@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/tsaving")
+@RequestMapping("/t-saving")
 public class TSavingAccountController {
 
     private TSavingAccountService tSavingAccountService;

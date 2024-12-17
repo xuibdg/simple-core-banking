@@ -13,7 +13,7 @@ public class MCifResponse {
     private String email;
     private String idNumber;
     private String idNumberType;
-    private Boolean isDeleted;
+    private boolean isDeleted;
     private Timestamp createdAt;
     private Timestamp upDateAt;
     private String createdBy;
@@ -87,11 +87,11 @@ public class MCifResponse {
         this.idNumberType = idNumberType;
     }
 
-    public Boolean isDeleted() {
+    public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(boolean deleted) {
         isDeleted = deleted;
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/request")
+@RequestMapping("/cif")
 public class MCifController {
 
     private MCifService mCifService;
@@ -25,7 +25,7 @@ public class MCifController {
     }
 
     @GetMapping
-    public List<MCifResponse> readS(@Param("customerName") String customerName) {
+    public List<MCifResponse> readMCifList(@Param("customerName") String customerName) {
         return mCifService.reads(customerName);
     }
 

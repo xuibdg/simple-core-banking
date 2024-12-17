@@ -27,8 +27,13 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
                 .orElseThrow(() -> new RuntimeException("User Tidak Ada"));
         tSavingAccount.setIsDeleted(true);
         tSavingAccountRepository.save(tSavingAccount);
-        return "Success delete by Saving Account Id : " + tSavingAccount.getSavingAccountId();
+
+        return "Success delete by Saving Account Id : " + tSavingAccount.getSavingAccountId() + "\n" + "1. Uang Anda : Rp." + tSavingAccount.getCurrentBalance() ;
+
     }
+
+
+
 
     @Override
     public TSavingAccountResponse authorization(String savingAccountId) {

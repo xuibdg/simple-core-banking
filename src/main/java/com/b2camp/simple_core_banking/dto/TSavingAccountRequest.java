@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 public class TSavingAccountRequest {
     private String accountNumber;
     private String cifId;
-    private String mCifId;
     private String savingId;
     private BigDecimal beginBalance;
     private BigDecimal endBalance;
@@ -14,13 +13,6 @@ public class TSavingAccountRequest {
     private boolean isDeleted;
     private Timestamp authorizationAt;
 
-    public String getmCifId() {
-        return mCifId;
-    }
-
-    public void setmCifId(String mCifId) {
-        this.mCifId = mCifId;
-    }
 
     public BigDecimal getBeginBalance() {
         return beginBalance;
