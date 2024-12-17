@@ -2,7 +2,7 @@ package com.b2camp.simple_core_banking.dto;
 
 public class TSavingAccountRequest {
     private String accountNumber;
-    private String cifId;
+    private String cif;
     private String savingId;
 
 
@@ -16,11 +16,11 @@ public class TSavingAccountRequest {
 
     //getter setter untuk cifID
     public String getCifId() {
-        return cifId = cifId;
+        return cif;
     }
 
-    public void setCifId(String cifId) {
-        this.cifId = cifId;
+    public void setCifId(String cif) {
+        this.cif= cif;
     }
 
     //getter setter untuk savingID

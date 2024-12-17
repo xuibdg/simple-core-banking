@@ -161,6 +161,4 @@ public class MCifResponse {
         this.statusName = statusName;
     }
 
-    public void getAuthorizationAt(Timestamp authorizationAt) {
-    }
 }

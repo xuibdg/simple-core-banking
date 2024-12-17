@@ -104,7 +104,7 @@ public class TSavingAccount extends BaseReference {
         isDeleted = deleted;
     }
 
-    public void setSavingId(String savingId) {
+    public void setSaving(String savingId) {
         this.savingId = savingId;
     }
 
@@ -157,7 +157,7 @@ public class TSavingAccount extends BaseReference {
         return savingId;
     }
 
-    public void setSavungId(String savingId) {
+    public void setSavingId(String savingId) {
         this.savingId = savingId;
     }
 

@@ -1,5 +1,4 @@
 package com.b2camp.simple_core_banking.controller;
-
 import com.b2camp.simple_core_banking.entity.MCif;
 import com.b2camp.simple_core_banking.repository.MCifRepository;
 import com.b2camp.simple_core_banking.service.MCifService;

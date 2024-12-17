@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface MCifService {
-    MCifResponse updateCif(String McifID, MCifRequest request);
+    MCifResponse updateCif(String cifId, MCifRequest request);
 }

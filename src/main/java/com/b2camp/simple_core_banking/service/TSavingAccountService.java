@@ -10,5 +10,5 @@ import java.util.Optional;
 @Service
 public interface TSavingAccountService {
 
-    TSavingAccountResponse createe(TSavingAccountRequest tSavingAccountRequest);
+    TSavingAccountResponse create(TSavingAccountRequest tSavingAccountRequest);
 }

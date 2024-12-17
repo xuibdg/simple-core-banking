@@ -28,25 +28,22 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
 
     @Transactional
     @Override
-    public TSavingAccountResponse createe(TSavingAccountRequest tSavingAccountRequest) {
+    public TSavingAccountResponse create(TSavingAccountRequest tSavingAccountRequest) {
         TSavingAccount tSavingAccount = new TSavingAccount();
-        buildToEntityy(tSavingAccount, tSavingAccountRequest);
+        buildToEntity(tSavingAccount, tSavingAccountRequest);
         tSavingAccountRepository.save(tSavingAccount);
-        return buildToResponsee(tSavingAccount);
+        return buildToResponse(tSavingAccount);
     }
 
-    private void buildToEntityy(TSavingAccount tSavingAccount, TSavingAccountRequest request) {
+    private void buildToEntity(TSavingAccount tSavingAccount, TSavingAccountRequest request) {
         tSavingAccount.setAccountNumber(request.getAccountNumber());
-        tSavingAccount.setSavingId(request.getSavingId());
-        tSavingAccount.setBeginBalance(new BigDecimal("1000.00"));
-        tSavingAccount.setEndBalance(new BigDecimal("1000.00"));
-        tSavingAccount.setCurrentBalance(new BigDecimal("1000.00"));
+        tSavingAccount.setSaving(request.getSavingId());
         tSavingAccount.setIsDeleted(false);
         tSavingAccount.setAuthorizationAt(Timestamp.from(Instant.now()).toLocalDateTime());
 
     }
 
-    private TSavingAccountResponse buildToResponsee(TSavingAccount tSavingAccount) {
+    private TSavingAccountResponse buildToResponse(TSavingAccount tSavingAccount) {
         TSavingAccountResponse response = new TSavingAccountResponse();
 
         response.setSavingAccountId(tSavingAccount.getSavingAccountId());

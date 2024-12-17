@@ -24,10 +24,7 @@ public class TSavingAccountController {
 
     @PostMapping("/")
     public ResponseEntity<TSavingAccountResponse> create(@RequestBody TSavingAccountRequest request) {
-        // Panggil service untuk membuat saving account baru
-        TSavingAccountResponse response = tSavingAccountService.createe(request);
-
-        // Kembalikan response dengan status HTTP 201 (Created)
+        TSavingAccountResponse response = tSavingAccountService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

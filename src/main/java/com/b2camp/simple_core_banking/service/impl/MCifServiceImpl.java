@@ -28,15 +28,15 @@ public class MCifServiceImpl implements MCifService {
     RNumberTypeRepository rNumberTypeRepository;
 
     @Override
-    public MCifResponse updateCif(String McifID, MCifRequest request) {
-        MCif mCif = mCifRepository.findById(McifID).orElse(null);
+    public MCifResponse updateCif(String cifId, MCifRequest request) {
+        MCif mCif = mCifRepository.findById(cifId).orElse(null);
         mCifRepository.save(mCif);
-        buildToEntityUpdate(mCif, request);
+        buildToEntityForUpdate(mCif, request);
 
-        return buildToResponseUpdate(mCif);
+        return buildToResponseForUpdate(mCif);
     }
 
-    private MCifResponse buildToResponseUpdate(MCif mCif) {
+    private MCifResponse buildToResponseForUpdate(MCif mCif) {
         MCifResponse response = new MCifResponse();
         response.setCifId(mCif.getCifId());
         response.setCustomerName(mCif.getCustomerName());
@@ -51,7 +51,7 @@ public class MCifServiceImpl implements MCifService {
         return response;
     }
 
-    private void buildToEntityUpdate(MCif mCif, MCifRequest request) {
+    private void buildToEntityForUpdate(MCif mCif, MCifRequest request) {
         mCif.setCustomerName(request.getCustomerName());
         mCif.setPhoneNumber(request.getPhoneNumber());
         mCif.setAddress(request.getAddress());
