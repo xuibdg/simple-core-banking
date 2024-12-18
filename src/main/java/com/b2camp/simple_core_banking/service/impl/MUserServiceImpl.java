@@ -7,6 +7,7 @@ import com.b2camp.simple_core_banking.entity.MUserRole;
 import com.b2camp.simple_core_banking.repository.MUserRepository;
 import com.b2camp.simple_core_banking.repository.MUserRoleRepository;
 import com.b2camp.simple_core_banking.service.MUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class MUserServiceImpl implements MUserService {
+@Slf4j
+public class  MUserServiceImpl implements MUserService {
 
     @Autowired
     private MUserRepository mUserRepository;
@@ -30,6 +32,7 @@ public class MUserServiceImpl implements MUserService {
         MUser mUser = new MUser();
         buildToEntity(mUser, request);
         mUserRepository.save(mUser);
+        log.info("MUserServiceImpl createUser, succes save to mUser : {}", mUser);
 
         //mapping response dengan entity yg sudah di save
         return buildToResponse(mUser);
@@ -91,6 +94,8 @@ public class MUserServiceImpl implements MUserService {
     }
 
     private MUser buildToEntity(MUser mUser, MUserRequest request) {
+        log.info("MUserServiceImpl buildToEntity, process build to entity MUser : {}", request);
+
         // Mengatur nilai dari request ke entity
         mUser.setUserName(request.getUserName());
         mUser.setEmail(request.getEmail());
@@ -99,6 +104,7 @@ public class MUserServiceImpl implements MUserService {
         mUser.setIsDeleted(false);
 
         // Mencari MUserRole berdasarkan ID dari request
+        log.info("MUserServiceImpl buildToEntity, process search data mUserRole : {}", request.getUserRoleId());
         MUserRole mUserRole = mUserRoleRepository.findById(request.getUserRoleId())
                 .orElseThrow(() -> new RuntimeException("User role not found"));
 
