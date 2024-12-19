@@ -2,11 +2,11 @@ package com.b2camp.simple_core_banking.enums;
 
 public enum Status {
 
-    ACTIVE("ACTIVE", "ACTIVE"),
-    PENDING("PENDING", "PENDING"),
-    INACTIVE("INACTIVE", "INACTIVE"),
-    //IN_PROGRESS("IN_PROGRESS", "IN PROGRESS"),
-    //REJECT("REJECT", "REJECT")
+    ACTIVE("1", "ACTIVE"),
+    PENDING("2", "PENDING"),
+    INACTIVE("3", "INACTIVE"),
+    //IN_PROGRESS("4", "IN PROGRESS"),
+    //REJECT("5", "REJECT")
     ;
 
     private final String key;
