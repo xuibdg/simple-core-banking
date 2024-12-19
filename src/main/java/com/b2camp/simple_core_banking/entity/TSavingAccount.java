@@ -27,7 +27,7 @@ public class TSavingAccount extends BaseReference {
     private BigDecimal beginBalance;
 
     @Column(name = "end_balance", nullable = false)
-    private BigDecimal endBalance ;
+    private BigDecimal endBalance;
 
     @Column(name = "current_balance", nullable = false)
     private BigDecimal currentBalance;
