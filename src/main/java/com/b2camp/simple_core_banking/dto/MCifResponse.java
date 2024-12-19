@@ -156,4 +156,5 @@ public class MCifResponse {
     public void setStatusName(String statusName) {
         this.statusName = statusName;
     }
+
 }

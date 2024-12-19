@@ -16,7 +16,7 @@ public class TSavingAccountController {
     }
 
     @PutMapping("/{savingAccountId}")
-    public TSavingAccountResponse createTSavingAccount(@PathVariable String savingAccountId,
+    public TSavingAccountResponse updateTSavingAccount(@PathVariable String savingAccountId,
                                                        @RequestBody TSavingAccountRequest request) {
         return tSavingAccountService.updateSavingAccount(savingAccountId, request);
     }

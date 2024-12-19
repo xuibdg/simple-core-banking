@@ -16,6 +16,9 @@ spring:
     max-lifetime: 60000
     connection-timeout: 30000
     validation-timeout: 5000
+  logging:
+    level:
+      root: INFO
 
 # Menambahkan port untuk aplikasi
 server:

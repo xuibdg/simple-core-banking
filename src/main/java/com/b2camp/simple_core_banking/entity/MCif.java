@@ -22,16 +22,16 @@ public class MCif extends BaseReference {
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @Column(name = "address", nullable = false, length = 255)
+    @Column(name = "address",nullable = false, length = 255)
     private String address;
 
-    @Column(name = "phone_number", nullable = false, length = 15)
+    @Column(name = "phone_number",nullable = false, length = 15)
     private String phoneNumber;
 
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "email",nullable = false, length = 100)
     private String email;
 
-    @Column(name = "id_number", nullable = false, length = 50)
+    @Column(name = "id_number",nullable = false, length = 50)
     private String idNumber;
 
     @ManyToOne(fetch = FetchType.EAGER)

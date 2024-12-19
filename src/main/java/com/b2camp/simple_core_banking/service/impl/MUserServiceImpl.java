@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.b2camp.simple_core_banking.service.impl.MCifServiceImpl.log;
+
 @Service
 @Slf4j
 public class  MUserServiceImpl implements MUserService {

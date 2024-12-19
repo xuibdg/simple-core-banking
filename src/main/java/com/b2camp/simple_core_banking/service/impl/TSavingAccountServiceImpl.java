@@ -10,12 +10,17 @@ import com.b2camp.simple_core_banking.repository.MSavingRepository;
 import com.b2camp.simple_core_banking.repository.MUserRepository;
 import com.b2camp.simple_core_banking.repository.TSavingAccountRepository;
 import com.b2camp.simple_core_banking.service.TSavingAccountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
+import static com.b2camp.simple_core_banking.service.impl.MCifServiceImpl.log;
 
+@Slf4j
 @Service
 public class TSavingAccountServiceImpl implements TSavingAccountService {
 
@@ -32,11 +37,14 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
     private MSavingRepository mSavingRepository;
 
     @Override
+    @Transactional (propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public TSavingAccountResponse updateSavingAccount(String savingAccountId, TSavingAccountRequest request) {
-        TSavingAccount tSavingAccount = tSavingAccountRepository.findById(savingAccountId).orElse(null);
+        TSavingAccount tSavingAccount = tSavingAccountRepository
+                .findById(savingAccountId).orElse(null);
+        log.error("TSavingAccountServiceImpl UpdateSavingAccount: {}" ,tSavingAccount);
         buildEntity(tSavingAccount,request);
+        log.info("TSavingAccountServiceImpl UpdateSavingAccount Save");
         tSavingAccountRepository.save(tSavingAccount);
-
         return buildResponse(tSavingAccount);
     }
 
@@ -61,8 +69,9 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
 
         return response;
     }
+        @Transactional (propagation = Propagation.REQUIRED)
         private TSavingAccountRequest buildEntity (TSavingAccount tSavingAccount, TSavingAccountRequest request){
-
+        log.info("TSavingAccountServiceImpl buidEntity Process Update");
             tSavingAccount.setAccountNumber(request.getAccountNumber());
             MCif mCif = mCifRepository.findById(request.getCifId())
                     .orElseThrow(() -> new RuntimeException("MCif not found"));
@@ -70,7 +79,7 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
             MSaving mSaving = mSavingRepository.findById(request.getSavingId())
                     .orElseThrow(()-> new RuntimeException("MSaving not Found"));
             tSavingAccount.setMSaving(mSaving);
+            log.info("TSavingAccountServiceImpl buildentity : {}" ,tSavingAccount);
         return request;
     }
-
 }
