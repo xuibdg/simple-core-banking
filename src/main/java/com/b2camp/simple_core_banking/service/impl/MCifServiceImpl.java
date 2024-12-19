@@ -9,15 +9,21 @@ import com.b2camp.simple_core_banking.repository.MCifRepository;
 import com.b2camp.simple_core_banking.repository.RNumberTypeRepository;
 import com.b2camp.simple_core_banking.repository.RStatusRepository;
 import com.b2camp.simple_core_banking.service.MCifService;
-import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-
+@Slf4j
 @Service
 public class MCifServiceImpl implements MCifService {
+
+    private static final Logger log = LogManager.getLogger(MCifServiceImpl.class);
     @Autowired
     MCifRepository mCifRepository;
 
@@ -28,17 +34,19 @@ public class MCifServiceImpl implements MCifService {
     RNumberTypeRepository rNumberTypeRepository;
 
 
+
+
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public MCifResponse createCif(MCifRequest request) {
         MCif mCif = new MCif();
         buildEntity(mCif, request);
+       log.info("Data SUCCES : {}",mCif.getPhoneNumber());
         mCifRepository.save(mCif);
-
-        return buildResponseCreate(mCif);
+        return buildResponseForCreate(mCif);
     }
 
-    private MCifResponse buildResponseCreate(MCif mCif) {
+    private MCifResponse buildResponseForCreate(MCif mCif) {
         MCifResponse response = new MCifResponse();
         response.setCifId(mCif.getCifId());
         response.setCustomerName(mCif.getCustomerName());
@@ -62,9 +70,10 @@ public class MCifServiceImpl implements MCifService {
         mCif.setIdNumber(request.getIdNumber());
         mCif.setDateOfBirth(request.getDateOfBirth());
 
-        RStatus rStatus = rStatusRepository.findById("1").orElseThrow(() -> new RuntimeException("Rstatus role not found"));
+        RStatus rStatus = rStatusRepository.findById("3").orElseThrow(() -> new RuntimeException("Rstatus role not found"));
         mCif.setrStatus(rStatus);
         mCif.setIdNumber(request.getIdNumber());
+
         RNumberType rNumberType = rNumberTypeRepository.findById(request.getIdNumberType()).orElseThrow(() -> new RuntimeException("RNumbertype role not found"));
         mCif.setrNumberType(rNumberType);
         mCif.setCreatedAt(Timestamp.from(Instant.now()));

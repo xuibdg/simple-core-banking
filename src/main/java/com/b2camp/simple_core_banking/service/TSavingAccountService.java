@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Service
 public interface TSavingAccountService {
-    List<TSavingAccountResponse>readTsavingAccount(String accountNumber);
+    List<TSavingAccountResponse> readTSavingAccount(String accountNumber);
 
-    Optional<TSavingAccountResponse>findBySavingAccountId(String savingAccountId);
+    Optional<TSavingAccountResponse> findBySavingAccountId(String savingAccountId);
 }

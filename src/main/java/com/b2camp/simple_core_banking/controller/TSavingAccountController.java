@@ -25,11 +25,12 @@ public class TSavingAccountController {
     }
 
     @GetMapping
-    List<TSavingAccountResponse>readreadTsavingAccount(@Param("accountNumber")String accountNumber){
-        return tSavingAccountService.readTsavingAccount(accountNumber);
+    List<TSavingAccountResponse> readTsavingAccount(@Param("accountNumber") String accountNumber) {
+        return tSavingAccountService.readTSavingAccount(accountNumber);
     }
+
     @GetMapping("/{savingAccountId}")
-    public Optional<TSavingAccountResponse>findBySavingAccountId(@PathVariable("savingAccountId") String savingAccountId){
+    public Optional<TSavingAccountResponse> findBySavingAccountId(@PathVariable("savingAccountId") String savingAccountId) {
         return tSavingAccountService.findBySavingAccountId(savingAccountId);
     }
 }

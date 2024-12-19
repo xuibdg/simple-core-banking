@@ -16,7 +16,7 @@ public interface TSavingAccountRepository extends JpaRepository<TSavingAccount, 
     @Query("SELECT tsa FROM TSavingAccount tsa WHERE (:accountNumber IS NULL OR :accountNumber = '' OR LOWER(tsa.accountNumber) LIKE LOWER(CONCAT('%', :accountNumber, '%'))) AND tsa.isDeleted = false")
     List<TSavingAccount> findAllByAccountNumberAndIsDeletedIsFalse(@Param("accountNumber") String accountNumber);
 
-    Optional<TSavingAccount>findBySavingId(String sevingId);
+    Optional<TSavingAccount> findBySavingId(String savingId);
 
 
 }
