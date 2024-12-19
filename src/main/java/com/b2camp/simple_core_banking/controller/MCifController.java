@@ -23,5 +23,4 @@ public class MCifController {
     public MCifResponse createCif (@RequestBody MCifRequest request){
         return mCifService.createCif(request);
     }
-
 }
