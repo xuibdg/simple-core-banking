@@ -21,19 +21,19 @@ public class MCifServiceImpl implements MCifService {
     @Override
     public List<MCifResponse> reads(String customerName) {
         List<MCif> mCifs = mCifRepository.findAllByCustomerNameAndIsDeletedFalse(customerName);
-        List<MCifResponse> mCifResponses = mCifs.stream().map(data -> buildToRespon(data)).collect(Collectors.toList());
+        List<MCifResponse> mCifResponses = mCifs.stream().map(data -> buildToResponse(data)).collect(Collectors.toList());
         return mCifResponses;
     }
 
     @Override
     public Optional<MCifResponse> findByCifId(String cifId) {
-        MCif mCif = mCifRepository.findByCifId(cifId)
+        MCif mCif = mCifRepository.findByCifIdAndIsDeletedFalse(cifId)
                 .orElseThrow(() -> new RuntimeException("Data tidak ditemukan untuk CIF ID: " + cifId));
-        return Optional.of(buildToRespon(mCif));
+        return Optional.of(buildToResponse(mCif));
     }
 
 
-    public MCifResponse buildToRespon(MCif mCif) {
+    public MCifResponse buildToResponse(MCif mCif) {
         MCifResponse mCifResponse = new MCifResponse();
         mCifResponse.setCifId(mCif.getCifId());
         mCifResponse.setCustomerName(mCif.getCustomerName());
@@ -47,21 +47,23 @@ public class MCifServiceImpl implements MCifService {
         mCifResponse.setCreatedAt(mCif.getAuthorizationAt());
         mCifResponse.setUpDateAt(mCif.getUpdateAt());
         mCifResponse.setAuthorizationAt(mCif.getAuthorization_at());
-        mCifResponse.setStatusId(mCif.getrStatus().getStatusId());
 
+        if (mCif.getrStatus() != null) {
+            mCifResponse.setStatusId(mCif.getrStatus().getStatusId());
+            mCifResponse.setStatusName(mCif.getrStatus().getStatusName());
+        }
+        if (mCif.getmUserAuthorizationBy() != null) {
+            mCifResponse.setAuthorizationBy(mCif.getmUserAuthorizationBy().getUserId());
+        }
+        if (mCif.getCreatedBy() != null) {
+            mCifResponse.setCreatedBy(mCif.getCreatedBy().getUserId());
+        }
         if (mCif.getUpdatedBy() != null) {
             mCifResponse.setUpDateBy(mCif.getUpdatedBy().getUserId());
-        } else {
-            mCifResponse.setUpDateBy(null);
         }
-
-        if (mCif.getrNumberType() == null) {
+        if (mCif.getrNumberType() != null) {
             mCifResponse.setIdNumberType(mCif.getrNumberType().getTypeId());
-        } else {
-            mCifResponse.setIdNumberType(null);
         }
-
-
         return mCifResponse;
     }
 }

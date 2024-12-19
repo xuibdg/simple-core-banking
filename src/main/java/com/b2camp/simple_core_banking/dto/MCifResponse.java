@@ -21,6 +21,15 @@ public class MCifResponse {
     private Timestamp authorizationAt;
     private String authorizationBy;
     private String statusId;
+    private String statusName;
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
 
     public String getCifId() {
 

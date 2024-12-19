@@ -46,8 +46,9 @@ public class TSavingAccount extends BaseReference {
     @JoinColumn(name = "authorization_by", referencedColumnName = "user_id")
     private MUser mUserAuthorizationBy;
 
-    @Column(name = "saving_id", nullable = false)
-    private String savingId;
+    @ManyToOne
+    @JoinColumn (name = "saving_id", referencedColumnName = "saving_id")
+    private MSaving mSaving;
 
     // No-argument constructor
     public TSavingAccount() {
@@ -56,7 +57,7 @@ public class TSavingAccount extends BaseReference {
     // All-argument constructor
     public TSavingAccount(String savingAccountId, String accountNumber, MCif mCifId, BigDecimal beginBalance,
                           BigDecimal endBalance, BigDecimal currentBalance, RStatus rStatus, boolean isDeleted,
-                          Timestamp authorizationAt, MUser mUserAuthorizationBy, String savingId) {
+                          Timestamp authorizationAt, MUser mUserAuthorizationBy) {
         this.savingAccountId = savingAccountId;
         this.accountNumber = accountNumber;
         this.mCifId = mCifId;
@@ -67,10 +68,24 @@ public class TSavingAccount extends BaseReference {
         this.isDeleted = isDeleted;
         this.authorizationAt = authorizationAt;
         this.mUserAuthorizationBy = mUserAuthorizationBy;
-        this.savingId = savingId;
+
     }
 
     //Getter and Setter
+
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public MSaving getmSaving() {
+        return mSaving;
+    }
+
+    public void setmSaving(MSaving mSaving) {
+        this.mSaving = mSaving;
+    }
+
     public String getSavingAccountId() {
         return savingAccountId;
     }
@@ -104,9 +119,6 @@ public class TSavingAccount extends BaseReference {
         isDeleted = deleted;
     }
 
-    public void setSavingId(String savingId) {
-        this.savingId = savingId;
-    }
 
     public RStatus getrStatus() {
         return rStatus;
@@ -157,11 +169,5 @@ public class TSavingAccount extends BaseReference {
         this.authorizationAt = authorizationAt;
     }
 
-    public String getSavingId() {
-        return savingId;
-    }
 
-    public void setSavungId(String savingId) {
-        this.savingId = savingId;
-    }
 }

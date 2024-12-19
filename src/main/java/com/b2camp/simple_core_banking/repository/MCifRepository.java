@@ -17,8 +17,8 @@ public interface MCifRepository extends JpaRepository<MCif, String> {
             "AND mu.isDeleted = false")
     List<MCif> findAllByCustomerNameAndIsDeletedFalse(@Param("customerName") String customerName);
 
-
-    Optional<MCif> findByCifId(String cifId);
+    @Query(value = "select * from m_cif mc where is_deleted is false and cif_id = :cifId", nativeQuery = true)
+    Optional<MCif> findByCifIdAndIsDeletedFalse(@Param("cifId") String cifId);
 
 
 }
