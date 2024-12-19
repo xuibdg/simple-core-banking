@@ -3,36 +3,32 @@ package com.b2camp.simple_core_banking.service.impl;
 import com.b2camp.simple_core_banking.dto.MCifRequest;
 import com.b2camp.simple_core_banking.dto.MCifResponse;
 import com.b2camp.simple_core_banking.entity.MCif;
-import com.b2camp.simple_core_banking.entity.RNumberType;
-import com.b2camp.simple_core_banking.entity.RStatus;
 import com.b2camp.simple_core_banking.repository.MCifRepository;
-import com.b2camp.simple_core_banking.repository.RNumberTypeRepository;
-import com.b2camp.simple_core_banking.repository.RStatusRepository;
 import com.b2camp.simple_core_banking.service.MCifService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.sql.Timestamp;
-import java.time.Instant;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class MCifServiceImpl implements MCifService {
 
+    private static final Logger log = LoggerFactory.getLogger(MCifServiceImpl.class);
     @Autowired
     private MCifRepository mCifRepository;
 
-    @Autowired
-    RStatusRepository rStatusRepository;
-
-    @Autowired
-    RNumberTypeRepository rNumberTypeRepository;
-
     @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ,propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public MCifResponse updateCif(String cifId, MCifRequest request) {
         MCif mCif = mCifRepository.findById(cifId).orElse(null);
-        mCifRepository.save(mCif);
         buildToEntityForUpdate(mCif, request);
-
+        log.info("MCifServiceImpl updateCif, (Successfully process update the save to) : {}", mCif);
+        mCifRepository.save(mCif);
         return buildToResponseForUpdate(mCif);
     }
 
@@ -52,6 +48,7 @@ public class MCifServiceImpl implements MCifService {
     }
 
     private void buildToEntityForUpdate(MCif mCif, MCifRequest request) {
+        log.info("MCifServiceImpl buildToEntityForUpdate, process build to entity MCif : {}", mCif.getEmail());
         mCif.setCustomerName(request.getCustomerName());
         mCif.setPhoneNumber(request.getPhoneNumber());
         mCif.setAddress(request.getAddress());
@@ -59,12 +56,5 @@ public class MCifServiceImpl implements MCifService {
         mCif.setIdNumber(request.getIdNumber());
         mCif.setDateOfBirth(request.getDateOfBirth());
 
-        RStatus rStatus = rStatusRepository.findById("1").orElseThrow(() -> new RuntimeException("Rstatus role not found"));
-        mCif.setrStatus(rStatus);
-        mCif.setIdNumber(request.getIdNumber());
-        RNumberType rNumberType = rNumberTypeRepository.findById(request.getIdNumberType()).orElseThrow(() -> new RuntimeException("RNumbertype role not found"));
-        mCif.setrNumberType(rNumberType);
-        mCif.setCreatedAt(Timestamp.from(Instant.now()));
-        mCif.setDeleted(false);
     }
 }

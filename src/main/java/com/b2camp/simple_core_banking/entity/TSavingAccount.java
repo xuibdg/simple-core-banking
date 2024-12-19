@@ -22,7 +22,7 @@ public class TSavingAccount extends BaseReference {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cif_id", referencedColumnName = "cif_id")
-    private MCif mCifId;
+    private MCif cifId;
 
     @Column(name = "begin_balance")
     private BigDecimal beginBalance;
@@ -59,12 +59,12 @@ public class TSavingAccount extends BaseReference {
     }
 
     // All-argument constructor
-    public TSavingAccount(String savingAccountId, String accountNumber, MCif mCifId, BigDecimal beginBalance,
+    public TSavingAccount(String savingAccountId, String accountNumber, MCif cifId, BigDecimal beginBalance,
                           BigDecimal endBalance, BigDecimal currentBalance, RStatus rStatus, boolean isDeleted,
                           LocalDateTime authorizationAt, MUser mUserAuthorizationBy, String savingId) {
         this.savingAccountId = savingAccountId;
         this.accountNumber = accountNumber;
-        this.mCifId = mCifId;
+        this.cifId = cifId;
         this.beginBalance = beginBalance;
         this.endBalance = endBalance;
         this.currentBalance = currentBalance;
@@ -92,8 +92,12 @@ public class TSavingAccount extends BaseReference {
         this.accountNumber = accountNumber;
     }
 
-    public void setmCifId() {
-        this.mCifId = mCifId;
+    public MCif getCifId() {
+        return cifId;
+    }
+
+    public void setCifId(MCif cifId) {
+        this.cifId = cifId;
     }
 
     public boolean isDeleted() {
@@ -159,10 +163,6 @@ public class TSavingAccount extends BaseReference {
 
     public void setSavingId(String savingId) {
         this.savingId = savingId;
-    }
-
-    public MCif getmCifId() {
-        return mCifId;
     }
 
     public Timestamp getUpdateAt() {

@@ -105,4 +105,5 @@ public class TSavingAccountResponse {
         this.savingId = savingId;
     }
 
+
 }
