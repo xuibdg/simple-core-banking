@@ -46,10 +46,7 @@ public class MCifServiceImpl implements MCifService {
         mCifResponse.setDeleted(mCif.isDeleted());
         mCifResponse.setCreatedAt(mCif.getAuthorizationAt());
         mCifResponse.setUpDateAt(mCif.getUpdateAt());
-        mCifResponse.setCreatedBy(mCif.getCreatedBy().getUserId());
-        mCifResponse.setUpDateBy(mCif.getUpdatedBy().getUserId());
         mCifResponse.setAuthorizationAt(mCif.getAuthorization_at());
-        mCifResponse.setAuthorizationBy(mCif.getmUserAuthorizationBy().getUserId());
         mCifResponse.setStatusId(mCif.getrStatus().getStatusId());
 
         if (mCif.getUpdatedBy() != null) {
@@ -58,24 +55,12 @@ public class MCifServiceImpl implements MCifService {
             mCifResponse.setUpDateBy(null);
         }
 
-        if (mCif.getrNumberType() != null) {
+        if (mCif.getrNumberType() == null) {
             mCifResponse.setIdNumberType(mCif.getrNumberType().getTypeId());
         } else {
             mCifResponse.setIdNumberType(null);
         }
-        if (mCif.getCreatedBy() != null) {
-            String userId = mCif.getCreatedBy().getUserId();
-            System.out.println("User ID: " + userId);
-        } else {
-            System.out.println("CreatedBy is null.");
-        }
 
-        if (mCif.getmUserAuthorizationBy() != null) {
-            String tets = mCif.getmUserAuthorizationBy().getUserId();
-            System.out.println("Tidak Di Ketahui" + tets);
-        } else {
-            mCifResponse.setAuthorizationBy(null);
-        }
 
         return mCifResponse;
     }

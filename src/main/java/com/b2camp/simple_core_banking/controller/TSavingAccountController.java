@@ -22,9 +22,9 @@ public class TSavingAccountController {
         return tSavingAccountService.deleted(savingAccountId);
     }
 
-    @PutMapping("/{cifId}")
-    public TSavingAccountResponse authorization(@PathVariable String cifId) {
-        return tSavingAccountService.authorization(cifId);
+    @PutMapping("/{savingAccountId}")
+    public TSavingAccountResponse authorization(@PathVariable String savingAccountId) {
+        return tSavingAccountService.authorization(savingAccountId);
     }
 
 }
