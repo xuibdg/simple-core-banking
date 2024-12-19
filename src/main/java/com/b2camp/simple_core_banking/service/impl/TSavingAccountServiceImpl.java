@@ -46,7 +46,7 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public void validateDeleted(TSavingAccount tSavingAccount) {
         tSavingAccount.isDeleted();
         if (tSavingAccount.isDeleted() == true) {
@@ -81,12 +81,10 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
             throw new RuntimeException("Status Active");
         }
         log.info("Validasi savingAccountId success: {}", savingAccountId);
-
-
         return "Validasi savingAccountId Success ";
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     private TSavingAccountResponse buildToResponseAccount(TSavingAccount tSavingAccount) {
         TSavingAccountResponse tSavingAccountResponse = new TSavingAccountResponse();
         tSavingAccountResponse.setSavingAccountId(tSavingAccount.getSavingAccountId());
