@@ -2,7 +2,6 @@ package com.b2camp.simple_core_banking.dto;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class MCifResponse {
 
@@ -15,14 +14,22 @@ public class MCifResponse {
     private String idNumber;
     private String idNumberType;
     private boolean isDeleted;
-    private LocalDateTime createdAt;
-    private LocalDateTime upDateAt;
+    private Timestamp createdAt;
+    private Timestamp upDateAt;
     private String createdBy;
     private String upDateBy;
-    private LocalDateTime authorizationAt;
+    private Timestamp authorizationAt;
     private String authorizationBy;
     private String statusId;
     private String statusName;
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
 
     public String getCifId() {
 
@@ -97,29 +104,22 @@ public class MCifResponse {
         isDeleted = deleted;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpDateAt() {
+    public Timestamp getUpDateAt() {
         return upDateAt;
     }
 
-    public void setUpDateAt(LocalDateTime upDateAt) {
+    public void setUpDateAt(Timestamp upDateAt) {
         this.upDateAt = upDateAt;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
 
     public String getUpDateBy() {
         return upDateBy;
@@ -129,11 +129,11 @@ public class MCifResponse {
         this.upDateBy = upDateBy;
     }
 
-    public LocalDateTime getAuthorizationAt() {
+    public Timestamp getAuthorizationAt() {
         return authorizationAt;
     }
 
-    public void setAuthorizationAt(LocalDateTime authorizationAt) {
+    public void setAuthorizationAt(Timestamp authorizationAt) {
         this.authorizationAt = authorizationAt;
     }
 
@@ -153,12 +153,17 @@ public class MCifResponse {
         this.statusId = statusId;
     }
 
-    public String getStatusName() {
-        return statusName;
+
+    public Boolean getDeleted() {
+        return isDeleted;
     }
 
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public void getAuthorizationAt(Timestamp authorizationAt) {

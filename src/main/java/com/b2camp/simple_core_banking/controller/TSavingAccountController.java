@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/tsaving")
+@RequestMapping("/t-saving")
 public class TSavingAccountController {
     private TSavingAccountService tSavingAccountService;
 
@@ -24,10 +24,21 @@ public class TSavingAccountController {
         this.tSavingAccountService = tSavingAccountService;
     }
 
+    @DeleteMapping("/{savingAccountId}")
+    public String deletedById(@PathVariable String savingAccountId) {
+        return tSavingAccountService.deleted(savingAccountId);
+    }
+
+    @PutMapping("/{savingAccountId}")
+    public TSavingAccountResponse authorization(@PathVariable String savingAccountId) {
+        return tSavingAccountService.authorization(savingAccountId);
+    }
+
     @GetMapping
     List<TSavingAccountResponse>readreadTsavingAccount(@Param("accountNumber")String accountNumber){
         return tSavingAccountService.readTsavingAccount(accountNumber);
     }
+
     @GetMapping("/{savingAccountId}")
     public Optional<TSavingAccountResponse>findBySavingAccountId(@PathVariable("savingAccountId") String savingAccountId){
         return tSavingAccountService.findBySavingAccountId(savingAccountId);

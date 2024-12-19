@@ -1,6 +1,7 @@
 package com.b2camp.simple_core_banking.dto;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class TSavingAccountResponse {
@@ -12,12 +13,22 @@ public class TSavingAccountResponse {
     private BigDecimal currentBalance;
     private String statusId;
     private boolean isDeleted;
-    private LocalDateTime authorizationAt;
+    private Timestamp authorizationAt;
     private String authorizationBy;
     private String savingId;
     private String savingName;
+    private String statusName;
 
     //
+
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
 
     public String getSavingAccountId() {
         return savingAccountId;
@@ -83,11 +94,11 @@ public class TSavingAccountResponse {
         isDeleted = deleted;
     }
 
-    public LocalDateTime getAuthorizationAt() {
+    public Timestamp getAuthorizationAt() {
         return authorizationAt;
     }
 
-    public void setAuthorizationAt(LocalDateTime authorizationAt) {
+    public void setAuthorizationAt(Timestamp authorizationAt) {
         this.authorizationAt = authorizationAt;
     }
 
@@ -113,5 +124,9 @@ public class TSavingAccountResponse {
 
     public void setSavingName(String savingName) {
         this.savingName = savingName;
+    }
+
+    public void setStatus(String authorized) {
+
     }
 }
