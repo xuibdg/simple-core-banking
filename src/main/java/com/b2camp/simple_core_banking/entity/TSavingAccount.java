@@ -5,7 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "t_saving_account", schema = "public")
@@ -20,51 +19,48 @@ public class TSavingAccount extends BaseReference {
     @Column(name = "account_number", nullable = false)
     private String accountNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "cif_id", referencedColumnName = "cif_id")
-    private MCif cifId;
+    private MCif mCifId;
 
-    @Column(name = "begin_balance")
+    @Column(name = "begin_balance", nullable = false)
     private BigDecimal beginBalance;
 
-    @Column(name = "end_balance")
+    @Column(name = "end_balance", nullable = false)
     private BigDecimal endBalance;
 
-    @Column(name = "current_balance")
+    @Column(name = "current_balance", nullable = false)
     private BigDecimal currentBalance;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private RStatus rStatus;
 
-    @Column(name = "is_deleted", nullable = false)
+    @Column(name = "is_deleted")
     private boolean isDeleted;
 
     @Column(name = "authorization_at")
-    private LocalDateTime authorizationAt;
+    private Timestamp authorizationAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "authorization_by", referencedColumnName = "user_id")
     private MUser mUserAuthorizationBy;
 
-    @Column(name = "saving_id", nullable = false)
-    private String savingId;
-
-    @Column(name = "updated_at")
-    private Timestamp updateAt;
-
+    @ManyToOne
+    @JoinColumn (name = "saving_id", referencedColumnName = "saving_id")
+    private MSaving mSaving;
 
     // No-argument constructor
     public TSavingAccount() {
     }
 
     // All-argument constructor
-    public TSavingAccount(String savingAccountId, String accountNumber, MCif cifId, BigDecimal beginBalance,
+    public TSavingAccount(String savingAccountId, String accountNumber, MCif mCifId, BigDecimal beginBalance,
                           BigDecimal endBalance, BigDecimal currentBalance, RStatus rStatus, boolean isDeleted,
-                          LocalDateTime authorizationAt, MUser mUserAuthorizationBy, String savingId) {
+                          Timestamp authorizationAt, MUser mUserAuthorizationBy) {
         this.savingAccountId = savingAccountId;
         this.accountNumber = accountNumber;
-        this.cifId = cifId;
+        this.mCifId = mCifId;
         this.beginBalance = beginBalance;
         this.endBalance = endBalance;
         this.currentBalance = currentBalance;
@@ -72,10 +68,24 @@ public class TSavingAccount extends BaseReference {
         this.isDeleted = isDeleted;
         this.authorizationAt = authorizationAt;
         this.mUserAuthorizationBy = mUserAuthorizationBy;
-        this.savingId = savingId;
+
     }
 
     //Getter and Setter
+
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public MSaving getmSaving() {
+        return mSaving;
+    }
+
+    public void setmSaving(MSaving mSaving) {
+        this.mSaving = mSaving;
+    }
+
     public String getSavingAccountId() {
         return savingAccountId;
     }
@@ -92,25 +102,23 @@ public class TSavingAccount extends BaseReference {
         this.accountNumber = accountNumber;
     }
 
-    public MCif getCifId() {
-        return cifId;
+    public MCif getmCifId() {
+        return mCifId;
     }
 
-    public void setCifId(MCif cifId) {
-        this.cifId = cifId;
+    public void setmCifId(MCif mCifId) {
+        this.mCifId = mCifId;
     }
 
     public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(boolean deleted) {
+
+    public void setIsDeleted(boolean deleted) {
         isDeleted = deleted;
     }
 
-    public void setSaving(String savingId) {
-        this.savingId = savingId;
-    }
 
     public RStatus getrStatus() {
         return rStatus;
@@ -128,60 +136,38 @@ public class TSavingAccount extends BaseReference {
         this.mUserAuthorizationBy = mUserAuthorizationBy;
     }
 
+    public BigDecimal getBeginBalance() {
+        return beginBalance;
+    }
+
     public void setBeginBalance(BigDecimal beginBalance) {
         this.beginBalance = beginBalance;
+    }
+
+    public BigDecimal getEndBalance() {
+        return endBalance;
     }
 
     public void setEndBalance(BigDecimal endBalance) {
         this.endBalance = endBalance;
     }
 
+    public BigDecimal getCurrentBalance() {
+        return currentBalance;
+    }
+
     public void setCurrentBalance(BigDecimal currentBalance) {
         this.currentBalance = currentBalance;
     }
 
-    public boolean getIsDeleted() {
-        return isDeleted;
-    }
 
-    public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public LocalDateTime getAuthorizationAt() {
+    public Timestamp getAuthorizationAt() {
         return authorizationAt;
     }
 
-    public void setAuthorizationAt(LocalDateTime authorizationAt) {
+    public void setAuthorizationAt(Timestamp authorizationAt) {
         this.authorizationAt = authorizationAt;
     }
 
 
-    public String getSavingId() {
-        return savingId;
-    }
-
-    public void setSavingId(String savingId) {
-        this.savingId = savingId;
-    }
-
-    public Timestamp getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Timestamp updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public BigDecimal getBeginBalance(String s) {
-        return beginBalance;
-    }
-
-    public BigDecimal getEndBalance(String a) {
-        return endBalance;
-    }
-
-    public BigDecimal getCurrentBalance(String s) {
-        return currentBalance;
-    }
 }
