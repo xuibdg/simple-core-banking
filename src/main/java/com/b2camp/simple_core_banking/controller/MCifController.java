@@ -32,6 +32,7 @@ public class MCifController {
     public Optional<MCifResponse> findByCifId(@PathVariable String cifId) {
         return mCifService.findByCifId(cifId);
     }
+
     @PutMapping("/{id}")
     public MCifResponse mCifRepository (@PathVariable String id,
                                           @RequestBody MCifRequest request){

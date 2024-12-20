@@ -5,9 +5,9 @@ import com.b2camp.simple_core_banking.entity.MCif;
 import com.b2camp.simple_core_banking.repository.MCifRepository;
 import com.b2camp.simple_core_banking.dto.MCifRequest;
 import com.b2camp.simple_core_banking.service.MCifService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,7 +93,7 @@ public class MCifServiceImpl implements MCifService {
         response.setPhoneNumber(mCif.getPhoneNumber());
         response.setIdNumberType(mCif.getIdNumber());
         response.setStatusId(mCif.getrStatus().getStatusId());
-        response.getAuthorizationAt(mCif.getAuthorization_at());
+        response.setAuthorizationAt(mCif.getAuthorization_at());
         response.setDeleted(false);
         return response;
     }

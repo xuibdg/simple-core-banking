@@ -29,7 +29,7 @@ public class TSavingAccountController {
         return tSavingAccountService.authorization(savingAccountId);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<TSavingAccountResponse> create(@RequestBody TSavingAccountRequest request) {
         TSavingAccountResponse response = tSavingAccountService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

@@ -10,8 +10,6 @@ public class TSavingAccountRequest {
     private BigDecimal beginBalance;
     private BigDecimal endBalance;
     private BigDecimal currentBalance;
-    private boolean isDeleted;
-    private Timestamp authorizationAt;
 
 
     public BigDecimal getBeginBalance() {
@@ -36,22 +34,6 @@ public class TSavingAccountRequest {
 
     public void setCurrentBalance(BigDecimal currentBalance) {
         this.currentBalance = currentBalance;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public Timestamp getAuthorizationAt() {
-        return authorizationAt;
-    }
-
-    public void setAuthorizationAt(Timestamp authorizationAt) {
-        this.authorizationAt = authorizationAt;
     }
 
     public String getAccountNumber() {
