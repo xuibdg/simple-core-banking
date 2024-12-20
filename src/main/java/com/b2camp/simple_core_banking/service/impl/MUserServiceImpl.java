@@ -112,7 +112,6 @@ public class  MUserServiceImpl implements MUserService {
         log.info("MUserServiceImpl buildToEntity, process search data mUserRole : {}", request.getUserRoleId());
         MUserRole mUserRole = mUserRoleRepository.findById(request.getUserRoleId())
                 .orElseThrow(() -> new RuntimeException("User role not found"));
-
         mUser.setMUserRole(mUserRole);
 
         // Mengembalikan entity yang sudah dibangun

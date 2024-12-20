@@ -10,8 +10,6 @@ public class TSavingAccountRequest {
     private BigDecimal beginBalance;
     private BigDecimal endBalance;
     private BigDecimal currentBalance;
-    private boolean isDeleted;
-    private Timestamp authorizationAt;
 
 
     public BigDecimal getBeginBalance() {
@@ -38,22 +36,6 @@ public class TSavingAccountRequest {
         this.currentBalance = currentBalance;
     }
 
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public Timestamp getAuthorizationAt() {
-        return authorizationAt;
-    }
-
-    public void setAuthorizationAt(Timestamp authorizationAt) {
-        this.authorizationAt = authorizationAt;
-    }
-
     public String getAccountNumber() {
         return accountNumber;
     }
@@ -62,6 +44,7 @@ public class TSavingAccountRequest {
         this.accountNumber = accountNumber;
     }
 
+    //getter setter untuk cifID
     public String getCifId() {
         return cifId;
     }
@@ -70,6 +53,7 @@ public class TSavingAccountRequest {
         this.cifId = cifId;
     }
 
+    //getter setter untuk savingID
     public String getSavingId() {
         return savingId;
     }
@@ -77,4 +61,5 @@ public class TSavingAccountRequest {
     public void setSavingId(String savingId) {
         this.savingId = savingId;
     }
+
 }

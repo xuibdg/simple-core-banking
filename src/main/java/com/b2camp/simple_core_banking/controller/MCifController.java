@@ -3,15 +3,11 @@ package com.b2camp.simple_core_banking.controller;
 
 import com.b2camp.simple_core_banking.dto.MCifResponse;
 import com.b2camp.simple_core_banking.dto.MCifRequest;
+import com.b2camp.simple_core_banking.repository.MCifRepository;
 import com.b2camp.simple_core_banking.service.MCifService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +31,12 @@ public class MCifController {
     @GetMapping("/{cifId}")
     public Optional<MCifResponse> findByCifId(@PathVariable String cifId) {
         return mCifService.findByCifId(cifId);
+    }
+
+    @PutMapping("/{id}")
+    public MCifResponse mCifRepository (@PathVariable String id,
+                                          @RequestBody MCifRequest request){
+        return mCifService.updateCif(id, request);
     }
     @PostMapping
     public MCifResponse createCif (@RequestBody MCifRequest request){

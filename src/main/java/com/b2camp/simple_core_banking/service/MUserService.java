@@ -6,6 +6,7 @@ import com.b2camp.simple_core_banking.dto.MUserResponse;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface MUserService {
     MUserResponse createUser(MUserRequest request);
 

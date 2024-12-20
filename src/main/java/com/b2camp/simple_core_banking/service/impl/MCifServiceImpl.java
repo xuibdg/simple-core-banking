@@ -9,11 +9,10 @@ import com.b2camp.simple_core_banking.entity.RStatus;
 import com.b2camp.simple_core_banking.repository.RNumberTypeRepository;
 import com.b2camp.simple_core_banking.repository.RStatusRepository;
 import com.b2camp.simple_core_banking.service.MCifService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +22,8 @@ import java.util.stream.Collectors;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-@Slf4j
 @Service
+@Slf4j
 public class MCifServiceImpl implements MCifService {
 
 
@@ -64,7 +63,7 @@ public class MCifServiceImpl implements MCifService {
         mCifResponse.setIdNumberType(mCif.getrNumberType().getTypeId());
         mCifResponse.setDeleted(mCif.isDeleted());
         mCifResponse.setCreatedAt(mCif.getAuthorizationAt());
-        mCifResponse.setUpDateAt(mCif.getUpdateAt());
+        mCifResponse.setUpDateAt(mCif.getUpdatedAt());
         mCifResponse.setAuthorizationAt(mCif.getAuthorization_at());
 
         if (mCif.getrStatus() != null) {
@@ -84,6 +83,42 @@ public class MCifServiceImpl implements MCifService {
             mCifResponse.setIdNumberType(mCif.getrNumberType().getTypeId());
         }
         return mCifResponse;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ,propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public MCifResponse updateCif(String cifId, MCifRequest request) {
+        MCif mCif = mCifRepository.findById(cifId).orElse(null);
+        buildToEntityForUpdate(mCif, request);
+        log.info("MCifServiceImpl updateCif, (Successfully process update the save to) : {}", mCif);
+        mCifRepository.save(mCif);
+        return buildToResponseForUpdate(mCif);
+    }
+
+    private MCifResponse buildToResponseForUpdate(MCif mCif) {
+        MCifResponse response = new MCifResponse();
+        response.setCifId(mCif.getCifId());
+        response.setCustomerName(mCif.getCustomerName());
+        response.setAddress(mCif.getAddress());
+        response.setEmail(mCif.getEmail());
+        response.setIdNumber(mCif.getIdNumber());
+        response.setPhoneNumber(mCif.getPhoneNumber());
+        response.setIdNumberType(mCif.getIdNumber());
+        response.setStatusId(mCif.getrStatus().getStatusId());
+        response.setAuthorizationAt(mCif.getAuthorization_at());
+        response.setDeleted(false);
+        return response;
+    }
+
+    private void buildToEntityForUpdate(MCif mCif, MCifRequest request) {
+        log.info("MCifServiceImpl buildToEntityForUpdate, process build to entity MCif : {}", mCif.getEmail());
+        mCif.setCustomerName(request.getCustomerName());
+        mCif.setPhoneNumber(request.getPhoneNumber());
+        mCif.setAddress(request.getAddress());
+        mCif.setEmail(request.getEmail());
+        mCif.setIdNumber(request.getIdNumber());
+        mCif.setDateOfBirth(request.getDateOfBirth());
+
     }
 
     @Override
