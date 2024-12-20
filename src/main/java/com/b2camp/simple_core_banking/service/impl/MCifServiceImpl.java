@@ -2,6 +2,7 @@ package com.b2camp.simple_core_banking.service.impl;
 
 import com.b2camp.simple_core_banking.dto.MCifResponse;
 import com.b2camp.simple_core_banking.entity.MCif;
+import com.b2camp.simple_core_banking.enums.Status;
 import com.b2camp.simple_core_banking.repository.MCifRepository;
 import com.b2camp.simple_core_banking.dto.MCifRequest;
 import com.b2camp.simple_core_banking.entity.RNumberType;
@@ -126,7 +127,7 @@ public class MCifServiceImpl implements MCifService {
     public MCifResponse createCif(MCifRequest request) {
         MCif mCif = new MCif();
         buildEntity(mCif, request);
-       log.info("Data SUCCES : {}",mCif.getPhoneNumber());
+        log.info("Data SUCCESS: {}", mCif.getPhoneNumber());
         mCifRepository.save(mCif);
         return buildResponseForCreate(mCif);
     }

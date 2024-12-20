@@ -17,7 +17,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/t-saving")
 public class TSavingAccountController {
-
     private TSavingAccountService tSavingAccountService;
 
     @Autowired
@@ -41,8 +40,8 @@ public class TSavingAccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @GetMapping
-    List<TSavingAccountResponse>readreadTsavingAccount(@Param("accountNumber")String accountNumber){
-        return tSavingAccountService.readTsavingAccount(accountNumber);
+    List<TSavingAccountResponse>readTSavingAccount(@Param("accountNumber")String accountNumber){
+        return tSavingAccountService.readTSavingAccount(accountNumber);
     }
 
     @GetMapping("/{savingAccountId}")

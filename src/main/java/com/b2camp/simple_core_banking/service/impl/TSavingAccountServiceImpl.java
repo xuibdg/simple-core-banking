@@ -94,15 +94,28 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
         tSavingAccountResponse.setCifId(tSavingAccount.getmCifId().getCifId());
         tSavingAccountResponse.setSavingName(tSavingAccount.getmSaving().getSavingName());
 
+        if (tSavingAccount.getUpdatedAt() != null) {
+            tSavingAccountResponse.setUpdatedAt(tSavingAccount.getUpdatedAt());
+        }
+
+        if (tSavingAccount.getUpdatedBy() != null) {
+            tSavingAccountResponse.setUpdatedBy(tSavingAccount.getUpdatedBy().getUserName());
+        }
+
+        if (tSavingAccount.getCreatedAt() != null) {
+            tSavingAccountResponse.setCreatedAt(tSavingAccount.getCreatedAt());
+        }
+
+        if (tSavingAccount.getCreatedBy() != null) {
+            tSavingAccountResponse.setCreatedBy(tSavingAccount.getCreatedBy().getUserName());
+        }
+
         if (tSavingAccount.getrStatus() != null) {
-            tSavingAccountResponse.setStatus(tSavingAccount.getrStatus().getStatusId());
+            tSavingAccountResponse.setStatusId(tSavingAccount.getrStatus().getStatusId());
             tSavingAccountResponse.setStatusName(tSavingAccount.getrStatus().getStatusName());
         }
         if (tSavingAccount.getmCifId() != null) {
             tSavingAccountResponse.setCifId(tSavingAccount.getmCifId().getCifId());
-        }
-        if (tSavingAccount.getrStatus() != null) {
-            tSavingAccountResponse.setStatus(tSavingAccount.getrStatus().getStatusId());
         }
         if (tSavingAccount.getmSaving() != null) {
             tSavingAccountResponse.setSavingId(tSavingAccount.getmSaving().getSavingId());
@@ -128,7 +141,7 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public List<TSavingAccountResponse> readTSavingAccount(String accountNumber) {
         List<TSavingAccount> tSavingAccounts = tSavingAccountRepository.findAllByAccountNumberAndIsDeletedIsFalse(accountNumber);
-        List<TSavingAccountResponse> responses = tSavingAccounts.stream().map(data -> buildResponse(data)).collect(Collectors.toUnmodifiableList());
+        List<TSavingAccountResponse> responses = tSavingAccounts.stream().map(data -> buildToResponseAccount(data)).collect(Collectors.toList());
         return responses;
     }
 
@@ -138,41 +151,8 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
         TSavingAccount tSavingAccount = tSavingAccountRepository.findById(savingAccountId)
                 .orElseThrow(() -> new RuntimeException("Data saving id tidak ada: " + savingAccountId));
         log.info("Data Terlihat. {}", tSavingAccount.getSavingAccountId());
-        return Optional.of(buildResponse(tSavingAccount));
+        return  Optional.of(buildToResponseAccount(tSavingAccount));
 
-    }
-
-
-    private TSavingAccountResponse buildResponse(TSavingAccount tSavingAccount) {
-        TSavingAccountResponse tSavingAccountResponse = new TSavingAccountResponse();
-        tSavingAccountResponse.setSavingAccountId(tSavingAccount.getSavingAccountId());
-        tSavingAccountResponse.setAccountNumber(tSavingAccount.getAccountNumber());
-        tSavingAccountResponse.setBeginBalance(tSavingAccount.getBeginBalance());
-        tSavingAccountResponse.setEndBalance(tSavingAccount.getEndBalance());
-        tSavingAccountResponse.setCurrentBalance(tSavingAccount.getCurrentBalance());
-
-        if (tSavingAccount.getmCifId() != null) {
-            tSavingAccountResponse.setCifId(tSavingAccount.getmCifId().getCifId());
-        } else {
-            tSavingAccountResponse.setCifId(null);
-        }
-
-        if (tSavingAccount.getrStatus() != null) {
-            tSavingAccountResponse.setStatusId(tSavingAccount.getrStatus().getStatusId());
-        } else {
-            tSavingAccountResponse.setStatusId(null);
-        }
-
-        tSavingAccountResponse.setDeleted(tSavingAccount.isDeleted());
-
-
-        if (tSavingAccount.getSavingAccountId() != null) {
-            tSavingAccountResponse.setSavingAccountId(tSavingAccount.getSavingAccountId());
-        } else {
-            tSavingAccountResponse.setSavingAccountId(null);
-        }
-
-        return tSavingAccountResponse;
     }
 
     private void buildToEntityForCreate(TSavingAccount tSavingAccount, TSavingAccountRequest request) {
