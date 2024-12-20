@@ -126,7 +126,7 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
         tSavingAccount.setEndBalance(request.getEndBalance());
         tSavingAccount.setCurrentBalance(request.getCurrentBalance());
         tSavingAccount.setIsDeleted(false);
-        tSavingAccount.setCre(Timestamp.from(Instant.now()));
+//        tSavingAccount.setCre(Timestamp.from(Instant.now()));
 
 
         log.info("TSavingAccountServiceImpl buildToEntity, process search data rStatusId from : {}", tSavingAccount);
