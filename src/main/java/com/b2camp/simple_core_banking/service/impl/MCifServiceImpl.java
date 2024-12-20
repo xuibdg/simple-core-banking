@@ -51,7 +51,7 @@ public class MCifServiceImpl implements MCifService {
         mCifResponse.setIdNumberType(mCif.getrNumberType().getTypeId());
         mCifResponse.setDeleted(mCif.isDeleted());
         mCifResponse.setCreatedAt(mCif.getAuthorizationAt());
-        mCifResponse.setUpDateAt(mCif.getUpdateAt());
+        mCifResponse.setUpDateAt(mCif.getUpdatedAt());
         mCifResponse.setAuthorizationAt(mCif.getAuthorization_at());
 
         if (mCif.getrStatus() != null) {
