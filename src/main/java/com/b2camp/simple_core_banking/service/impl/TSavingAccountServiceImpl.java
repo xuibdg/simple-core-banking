@@ -21,6 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -91,15 +94,28 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
         tSavingAccountResponse.setCifId(tSavingAccount.getmCifId().getCifId());
         tSavingAccountResponse.setSavingName(tSavingAccount.getmSaving().getSavingName());
 
+        if (tSavingAccount.getUpdatedAt() != null) {
+            tSavingAccountResponse.setUpdatedAt(tSavingAccount.getUpdatedAt());
+        }
+
+        if (tSavingAccount.getUpdatedBy() != null) {
+            tSavingAccountResponse.setUpdatedBy(tSavingAccount.getUpdatedBy().getUserName());
+        }
+
+        if (tSavingAccount.getCreatedAt() != null) {
+            tSavingAccountResponse.setCreatedAt(tSavingAccount.getCreatedAt());
+        }
+
+        if (tSavingAccount.getCreatedBy() != null) {
+            tSavingAccountResponse.setCreatedBy(tSavingAccount.getCreatedBy().getUserName());
+        }
+
         if (tSavingAccount.getrStatus() != null) {
-            tSavingAccountResponse.setStatus(tSavingAccount.getrStatus().getStatusId());
+            tSavingAccountResponse.setStatusId(tSavingAccount.getrStatus().getStatusId());
             tSavingAccountResponse.setStatusName(tSavingAccount.getrStatus().getStatusName());
         }
         if (tSavingAccount.getmCifId() != null) {
             tSavingAccountResponse.setCifId(tSavingAccount.getmCifId().getCifId());
-        }
-        if (tSavingAccount.getrStatus() != null) {
-            tSavingAccountResponse.setStatus(tSavingAccount.getrStatus().getStatusId());
         }
         if (tSavingAccount.getmSaving() != null) {
             tSavingAccountResponse.setSavingId(tSavingAccount.getmSaving().getSavingId());
@@ -116,6 +132,26 @@ public class TSavingAccountServiceImpl implements TSavingAccountService {
         tSavingAccountRepository.save(tSavingAccount);
         log.info("TSavingAccountServiceImpl create, success save to tSavingAccount : {}", tSavingAccount);
         return buildToResponseAccount(tSavingAccount);
+
+    }
+
+
+
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public List<TSavingAccountResponse> readTSavingAccount(String accountNumber) {
+        List<TSavingAccount> tSavingAccounts = tSavingAccountRepository.findAllByAccountNumberAndIsDeletedIsFalse(accountNumber);
+        List<TSavingAccountResponse> responses = tSavingAccounts.stream().map(data -> buildToResponseAccount(data)).collect(Collectors.toList());
+        return responses;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+            public Optional<TSavingAccountResponse> findBySavingAccountId(String savingAccountId) {
+        TSavingAccount tSavingAccount = tSavingAccountRepository.findById(savingAccountId)
+                .orElseThrow(() -> new RuntimeException("Data saving id tidak ada: " + savingAccountId));
+        log.info("Data Terlihat. {}", tSavingAccount.getSavingAccountId());
+        return  Optional.of(buildToResponseAccount(tSavingAccount));
 
     }
 

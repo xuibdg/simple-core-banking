@@ -15,7 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/cif")
 public class MCifController {
-    @Autowired
+
     private MCifService mCifService;
 
     @Autowired
@@ -37,5 +37,9 @@ public class MCifController {
     public MCifResponse mCifRepository (@PathVariable String id,
                                           @RequestBody MCifRequest request){
         return mCifService.updateCif(id, request);
+    }
+    @PostMapping
+    public MCifResponse createCif (@RequestBody MCifRequest request){
+        return mCifService.createCif(request);
     }
 }

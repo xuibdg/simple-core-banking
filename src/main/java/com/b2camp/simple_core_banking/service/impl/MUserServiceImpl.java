@@ -8,6 +8,8 @@ import com.b2camp.simple_core_banking.repository.MUserRepository;
 import com.b2camp.simple_core_banking.repository.MUserRoleRepository;
 import com.b2camp.simple_core_banking.service.MUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class  MUserServiceImpl implements MUserService {
 
+    private static final Logger log = LoggerFactory.getLogger(MUserServiceImpl.class);
     @Autowired
     private MUserRepository mUserRepository;
 
@@ -43,6 +46,7 @@ public class  MUserServiceImpl implements MUserService {
         MUser mUser = mUserRepository.findById(userId).orElse(null);
         buildToEntity(mUser, request);
         mUserRepository.save(mUser);
+
 
         return buildToResponse(mUser);
     }
@@ -82,6 +86,7 @@ public class  MUserServiceImpl implements MUserService {
         response.setEmail(mUser.getEmail());
         response.setFullname(mUser.getFullname());
         response.setIsDeleted(mUser.getIsDeleted());
+        log.info("");
 
         // validasi biar ga error
         if (mUser.getMUserRole() != null) {

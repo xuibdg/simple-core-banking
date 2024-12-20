@@ -165,4 +165,8 @@ public class MCifResponse {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
+
+    public void getAuthorizationAt(Timestamp authorizationAt) {
+
+    }
 }
