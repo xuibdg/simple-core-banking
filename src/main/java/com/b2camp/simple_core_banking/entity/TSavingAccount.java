@@ -1,5 +1,6 @@
 package com.b2camp.simple_core_banking.entity;
 
+import com.b2camp.simple_core_banking.dto.MUserRequest;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -167,6 +168,5 @@ public class TSavingAccount extends BaseReference {
     public void setMSaving(MSaving mSaving) {
         this.mSaving = mSaving;
     }
-
 
 }
