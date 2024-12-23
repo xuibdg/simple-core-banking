@@ -48,9 +48,19 @@ public class MCif extends BaseReference {
     @Column(name = "authorization_at")
     private Timestamp authorizationAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "authorization_by", referencedColumnName = "user_id")
     private MUser mUserAuthorizationBy;
+
+
+    @ManyToOne(fetch = FetchType.LAZY) // Relasi ke MUser
+    @JoinColumn(name = "created_by", referencedColumnName = "user_id")
+    private MUser createdBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "updated_by", referencedColumnName = "user_id")
+    private MUser updatedBy;
+
 
     // No-argument constructor
     public MCif() {
@@ -59,7 +69,7 @@ public class MCif extends BaseReference {
     // All-argument constructor
     public MCif(String cifId, String customerName, LocalDate dateOfBirth, String address, String phoneNumber,
                 String email, String idNumber, RNumberType rNumberType, boolean isDeleted, RStatus rStatus,
-                Timestamp authorizationAt, MUser mUserAuthorizationBy, String createdBy) {
+                Timestamp authorizationAt, MUser mUserAuthorizationBy, MUser createdBy, MUser updatedBy) {
         this.cifId = cifId;
         this.customerName = customerName;
         this.dateOfBirth = dateOfBirth;
@@ -72,8 +82,25 @@ public class MCif extends BaseReference {
         this.rStatus = rStatus;
         this.authorizationAt = authorizationAt;
         this.mUserAuthorizationBy = mUserAuthorizationBy;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
+    public MUser getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(MUser updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public MUser getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(MUser createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public String getCifId() {
 
@@ -172,4 +199,14 @@ public class MCif extends BaseReference {
     public void setmUserAuthorizationBy(MUser mUserAuthorizationBy) {
         this.mUserAuthorizationBy = mUserAuthorizationBy;
     }
+
+    public Timestamp getAuthorizationAt() {
+        return authorizationAt;
+    }
+
+    public void setAuthorizationAt(Timestamp authorizationAt) {
+        this.authorizationAt = authorizationAt;
+    }
+
+
 }

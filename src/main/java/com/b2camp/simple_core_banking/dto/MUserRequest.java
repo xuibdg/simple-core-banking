@@ -6,6 +6,24 @@ public class MUserRequest {
     private String password;
     private String userRoleId;
     private String fullname;
+    private String idNumber;
+    private String idNumberType;
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public String getIdNumberType() {
+        return idNumberType;
+    }
+
+    public void setIdNumberType(String idNumberType) {
+        this.idNumberType = idNumberType;
+    }
 
     // Getters and Setters
     public String getEmail() {

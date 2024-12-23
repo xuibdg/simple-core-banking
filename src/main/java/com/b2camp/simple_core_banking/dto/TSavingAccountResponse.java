@@ -1,6 +1,7 @@
 package com.b2camp.simple_core_banking.dto;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class TSavingAccountResponse {
@@ -8,18 +9,54 @@ public class TSavingAccountResponse {
     private String accountNumber;
     private String cifId;
     private BigDecimal beginBalance;
-    private BigDecimal endBalance ;
+    private BigDecimal endBalance;
     private BigDecimal currentBalance;
     private String statusId;
-    private String statusName;
     private boolean isDeleted;
-    private LocalDateTime authorizationAt;
+    private Timestamp authorizationAt;
     private String authorizationBy;
     private String savingId;
     private String savingName;
+    private String statusName;
+    private String createdBy;
+    private Timestamp createdAt;
+    private String updatedBy;
+    private Timestamp updatedAt;
 
     //
 
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public String getStatusName() {
         return statusName;
@@ -93,11 +130,11 @@ public class TSavingAccountResponse {
         isDeleted = deleted;
     }
 
-    public LocalDateTime getAuthorizationAt() {
+    public Timestamp getAuthorizationAt() {
         return authorizationAt;
     }
 
-    public void setAuthorizationAt(LocalDateTime authorizationAt) {
+    public void setAuthorizationAt(Timestamp authorizationAt) {
         this.authorizationAt = authorizationAt;
     }
 
@@ -124,5 +161,4 @@ public class TSavingAccountResponse {
     public void setSavingName(String savingName) {
         this.savingName = savingName;
     }
-
 }

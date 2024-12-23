@@ -1,131 +1,169 @@
 package com.b2camp.simple_core_banking.service.impl;
 
-import com.b2camp.simple_core_banking.dto.MCifRequest;
 import com.b2camp.simple_core_banking.dto.MCifResponse;
-import com.b2camp.simple_core_banking.dto.MUserResponse;
 import com.b2camp.simple_core_banking.entity.MCif;
-import com.b2camp.simple_core_banking.entity.MUser;
-import com.b2camp.simple_core_banking.entity.RStatus;
+import com.b2camp.simple_core_banking.enums.Status;
 import com.b2camp.simple_core_banking.repository.MCifRepository;
-import com.b2camp.simple_core_banking.repository.MUserRepository;
+import com.b2camp.simple_core_banking.dto.MCifRequest;
+import com.b2camp.simple_core_banking.entity.RNumberType;
+import com.b2camp.simple_core_banking.entity.RStatus;
+import com.b2camp.simple_core_banking.repository.RNumberTypeRepository;
 import com.b2camp.simple_core_banking.repository.RStatusRepository;
 import com.b2camp.simple_core_banking.service.MCifService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-@Slf4j
 @Service
+@Slf4j
 public class MCifServiceImpl implements MCifService {
 
-    static final Logger log = LoggerFactory.getLogger(MCifServiceImpl.class);
-    @Autowired
-    private MCifRepository mCifRepository;
 
     @Autowired
-    private RStatusRepository rStatusRepository;
+    MCifRepository mCifRepository;
 
+    @Autowired
+    RStatusRepository rStatusRepository;
 
+    @Autowired
+    RNumberTypeRepository rNumberTypeRepository;
 
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ,rollbackFor = Exception.class)
-    public String delete(String cifId) {
-        log.info("MCifServiceImpl Delete , Process Delete : {}", cifId);
-        MCif mCif = mCifRepository.findById(cifId)
-                .orElseThrow(() -> new RuntimeException("Not Found"));
-        validationDeleted(cifId);
-        mCif.setDeleted(true);
-        log.info("MCifServiceImpl Delete , Success Delete : {}", mCif);
-        mCifRepository.save(mCif);
-        return "Success Deleted : " + mCif.getCustomerName();
-    }
-    @Transactional(isolation = Isolation.SERIALIZABLE ,propagation = Propagation.REQUIRES_NEW)
-    public String validationDeleted (String cifId) {
-        RStatus rStatus = rStatusRepository.findById("2").orElseThrow(() -> new RuntimeException("Not Found"));
-        MCif mCif = mCifRepository.findById(cifId).orElseThrow(()-> new RuntimeException("Not Found"));
-            if (mCif.getrStatus().getStatusId().equals("2")) {
-                throw new RuntimeException("Status Ini Sudah Active");
-            }
-            mCif.setrStatus(rStatus);
-            return cifId;
-
+    public List<MCifResponse> reads(String customerName) {
+        List<MCif> mCifs = mCifRepository.findAllByCustomerNameAndIsDeletedFalse(customerName);
+        List<MCifResponse> mCifResponses = mCifs.stream().map(data -> buildToResponse(data)).collect(Collectors.toList());
+        return mCifResponses;
     }
 
     @Override
-    @Transactional (propagation = Propagation.REQUIRED)
-    public MCifResponse authorization(String cifId) {
-        log.info("MCifServiceImpl authorization, process set up authorization");
-        // Cari authorization berdasarkan userId
-        MCif mCif = mCifRepository.findById(cifId)
-                .orElseThrow(() -> new RuntimeException("Cif Not Found"));
-        validationId(cifId);
-        RStatus rStatus = rStatusRepository.findById("4")
-                .orElseThrow(() -> new RuntimeException("Rstatus Not Found"));
-        mCif.setrStatus(rStatus);
-        mCif.setAuthorization_at(Timestamp.from(Instant.now()));
-        mCifRepository.save(mCif);
-        return buildToResponse(mCif, rStatus);
+    public Optional<MCifResponse> findByCifId(String cifId) {
+        MCif mCif = mCifRepository.findByCifIdAndIsDeletedFalse(cifId)
+                .orElseThrow(() -> new RuntimeException("Data tidak ditemukan untuk CIF ID: " + cifId));
+        return Optional.of(buildToResponse(mCif));
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public String validationId (String cifId) {
-        MCif mCif = mCifRepository.findById(cifId)
-                .orElseThrow(()-> new RuntimeException("MCif Not Found"));
-        if (mCif.getrStatus().getStatusId().equals("4")){
-            throw new RuntimeException("Status Ini Sudah Active");
+    public MCifResponse buildToResponse(MCif mCif) {
+        MCifResponse mCifResponse = new MCifResponse();
+        mCifResponse.setCifId(mCif.getCifId());
+        mCifResponse.setCustomerName(mCif.getCustomerName());
+        mCifResponse.setDateOfBirth(mCif.getDateOfBirth());
+        mCifResponse.setAddress(mCif.getAddress());
+        mCifResponse.setPhoneNumber(mCif.getPhoneNumber());
+        mCifResponse.setEmail(mCif.getEmail());
+        mCifResponse.setIdNumber(mCif.getIdNumber());
+        mCifResponse.setIdNumberType(mCif.getrNumberType().getTypeId());
+        mCifResponse.setDeleted(mCif.isDeleted());
+        mCifResponse.setCreatedAt(mCif.getAuthorizationAt());
+        mCifResponse.setUpDateAt(mCif.getUpdatedAt());
+        mCifResponse.setAuthorizationAt(mCif.getAuthorization_at());
+
+        if (mCif.getrStatus() != null) {
+            mCifResponse.setStatusId(mCif.getrStatus().getStatusId());
+            mCifResponse.setStatusName(mCif.getrStatus().getStatusName());
         }
-        log.info("MCifServiceImpl validationId, process Success ");
-        return "validasi Success";
+        if (mCif.getmUserAuthorizationBy() != null) {
+            mCifResponse.setAuthorizationBy(mCif.getmUserAuthorizationBy().getUserId());
+        }
+        if (mCif.getCreatedBy() != null) {
+            mCifResponse.setCreatedBy(mCif.getCreatedBy().getUserId());
+        }
+        if (mCif.getUpdatedBy() != null) {
+            mCifResponse.setUpDateBy(mCif.getUpdatedBy().getUserId());
+        }
+        if (mCif.getrNumberType() != null) {
+            mCifResponse.setIdNumberType(mCif.getrNumberType().getTypeId());
+        }
+        return mCifResponse;
     }
 
-    @Transactional
-    private MCifResponse buildToResponse(MCif mCif,RStatus rStatus) {
-        log.info("MCifServiceImpl buildToResponse, process build to Response mCif");
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ,propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public MCifResponse updateCif(String cifId, MCifRequest request) {
+        MCif mCif = mCifRepository.findById(cifId).orElse(null);
+        buildToEntityForUpdate(mCif, request);
+        log.info("MCifServiceImpl updateCif, (Successfully process update the save to) : {}", mCif);
+        mCifRepository.save(mCif);
+        return buildToResponseForUpdate(mCif);
+    }
+
+    private MCifResponse buildToResponseForUpdate(MCif mCif) {
         MCifResponse response = new MCifResponse();
+        response.setCifId(mCif.getCifId());
         response.setCustomerName(mCif.getCustomerName());
-        response.setDateOfBirth(mCif.getDateOfBirth());
         response.setAddress(mCif.getAddress());
-        response.setPhoneNumber(mCif.getPhoneNumber());
         response.setEmail(mCif.getEmail());
         response.setIdNumber(mCif.getIdNumber());
-        response.setStatusId(rStatus.getStatusId());
-
-        // validasi biar ga error
-        log.info("MCifService buildToResponse, Process data Response : {}", mCif);
-        if (mCif.getrStatus() != null) {
-            response.setCifId(mCif.getrStatus().getStatusId());
-        } else {
-            response.setStatusId(null);
-        }
-        log.info("MCifService buildToResponse ,Success : {}",mCif);
+        response.setPhoneNumber(mCif.getPhoneNumber());
+        response.setIdNumberType(mCif.getIdNumber());
+        response.setStatusId(mCif.getrStatus().getStatusId());
+        response.setAuthorizationAt(mCif.getAuthorization_at());
+        response.setDeleted(false);
         return response;
     }
 
-    private MCif buildToEntity(MCif mCif, MCifRequest request) {
-        // Mengatur nilai dari request ke entity
+    private void buildToEntityForUpdate(MCif mCif, MCifRequest request) {
+        log.info("MCifServiceImpl buildToEntityForUpdate, process build to entity MCif : {}", mCif.getEmail());
         mCif.setCustomerName(request.getCustomerName());
-        mCif.setDateOfBirth(request.getDateOfBirth());
-        mCif.setAddress(request.getAddress());
         mCif.setPhoneNumber(request.getPhoneNumber());
+        mCif.setAddress(request.getAddress());
         mCif.setEmail(request.getEmail());
         mCif.setIdNumber(request.getIdNumber());
+        mCif.setDateOfBirth(request.getDateOfBirth());
+
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public MCifResponse createCif(MCifRequest request) {
+        MCif mCif = new MCif();
+        buildEntity(mCif, request);
+        log.info("Data SUCCESS: {}", mCif.getPhoneNumber());
+        mCifRepository.save(mCif);
+        return buildResponseForCreate(mCif);
+    }
+
+    private MCifResponse buildResponseForCreate(MCif mCif) {
+        MCifResponse response = new MCifResponse();
+        response.setCifId(mCif.getCifId());
+        response.setCustomerName(mCif.getCustomerName());
+        response.setAddress(mCif.getAddress());
+        response.setEmail(mCif.getEmail());
+        response.setIdNumber(mCif.getIdNumber());
+        response.setPhoneNumber(mCif.getPhoneNumber());
+        response.setIdNumberType(mCif.getIdNumber());
+        response.setStatusId(mCif.getrStatus().getStatusId());
+        response.getAuthorizationAt(mCif.getAuthorization_at());
+        response.setDeleted(false);
+        return response;
+
+    }
+
+    private void buildEntity(MCif mCif, MCifRequest request) {
+        mCif.setCustomerName(request.getCustomerName());
+        mCif.setPhoneNumber(request.getPhoneNumber());
+        mCif.setAddress(request.getAddress());
+        mCif.setEmail(request.getEmail());
+        mCif.setIdNumber(request.getIdNumber());
+        mCif.setDateOfBirth(request.getDateOfBirth());
+
+        RStatus rStatus = rStatusRepository.findById("3").orElseThrow(() -> new RuntimeException("Rstatus role not found"));
+        mCif.setrStatus(rStatus);
+        mCif.setIdNumber(request.getIdNumber());
+
+        RNumberType rNumberType = rNumberTypeRepository.findById(request.getIdNumberType()).orElseThrow(() -> new RuntimeException("RNumbertype role not found"));
+        mCif.setrNumberType(rNumberType);
+        mCif.setCreatedAt(Timestamp.from(Instant.now()));
         mCif.setDeleted(false);
 
-        RStatus rStatus = rStatusRepository.findById(request.getStatusId())
-                .orElseThrow(() -> new RuntimeException("User role not found"));
-
-        mCif.setCifId(rStatus.getStatusId());
-
-        // Mengembalikan entity yang sudah dibangun
-        return mCif;
     }
 }
