@@ -8,8 +8,6 @@ import com.b2camp.simple_core_banking.repository.MUserRepository;
 import com.b2camp.simple_core_banking.repository.MUserRoleRepository;
 import com.b2camp.simple_core_banking.service.MUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class  MUserServiceImpl implements MUserService {
 
-    private static final Logger log = LoggerFactory.getLogger(MUserServiceImpl.class);
     @Autowired
     private MUserRepository mUserRepository;
 
@@ -31,9 +28,14 @@ public class  MUserServiceImpl implements MUserService {
 
     @Override
     public MUserResponse createUser(MUserRequest request) {
-        //builder entity dengan request
-        MUser mUser = new MUser();
-        buildToEntity(mUser, request);
+        MUser mUser = MUser.builder()
+                .email(request.getEmail())
+                .userName(request.getUserName())
+                .fullname(request.getFullName())
+                .isDeleted(false)
+                .password(request.getPassword())
+                .build();
+        validateSave(mUser, request);
         mUserRepository.save(mUser);
         log.info("MUserServiceImpl createUser, succes save to mUser : {}", mUser);
 
@@ -44,7 +46,7 @@ public class  MUserServiceImpl implements MUserService {
     @Override
     public MUserResponse updateUser(String userId, MUserRequest request) {
         MUser mUser = mUserRepository.findById(userId).orElse(null);
-        buildToEntity(mUser, request);
+        buildToEntityForUpdate(mUser, request);
         mUserRepository.save(mUser);
 
 
@@ -73,7 +75,7 @@ public class  MUserServiceImpl implements MUserService {
     public String delete(String userId) {
         MUser mUser = mUserRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        mUser.setIsDeleted(true);
+        mUser.setDeleted(true);
         mUserRepository.save(mUser);
         return "Success delete by userId : " + mUser.getUserName();
     }
@@ -85,7 +87,7 @@ public class  MUserServiceImpl implements MUserService {
         response.setUserName(mUser.getUserName());
         response.setEmail(mUser.getEmail());
         response.setFullname(mUser.getFullname());
-        response.setIsDeleted(mUser.getIsDeleted());
+        response.setIsDeleted(mUser.isDeleted());
         log.info("");
 
         // validasi biar ga error
@@ -98,24 +100,23 @@ public class  MUserServiceImpl implements MUserService {
         return response;
     }
 
-    private MUser buildToEntity(MUser mUser, MUserRequest request) {
+    private void buildToEntityForUpdate(MUser mUser, MUserRequest request) {
         log.info("MUserServiceImpl buildToEntity, process build to entity MUser : {}", request);
 
         // Mengatur nilai dari request ke entity
         mUser.setUserName(request.getUserName());
         mUser.setEmail(request.getEmail());
         mUser.setPassword(request.getPassword());
-        mUser.setFullname(request.getFullname());
-        mUser.setIsDeleted(false);
+        mUser.setFullname(request.getFullName());
+        mUser.setDeleted(false);
+        validateSave(mUser,request);
+    }
 
-        // Mencari MUserRole berdasarkan ID dari request
+    private void validateSave(MUser mUser, MUserRequest request){
         log.info("MUserServiceImpl buildToEntity, process search data mUserRole : {}", request.getUserRoleId());
         MUserRole mUserRole = mUserRoleRepository.findById(request.getUserRoleId())
                 .orElseThrow(() -> new RuntimeException("User role not found"));
         mUser.setMUserRole(mUserRole);
-
-        // Mengembalikan entity yang sudah dibangun
-        return mUser;
     }
 
 }

@@ -1,12 +1,20 @@
 package com.b2camp.simple_core_banking.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "t_saving_account", schema = "public")
 public class TSavingAccount extends BaseReference {
 
@@ -49,125 +57,4 @@ public class TSavingAccount extends BaseReference {
     @ManyToOne
     @JoinColumn (name = "saving_id", referencedColumnName = "saving_id")
     private MSaving mSaving;
-
-    // No-argument constructor
-    public TSavingAccount() {
-    }
-
-    // All-argument constructor
-    public TSavingAccount(String savingAccountId, String accountNumber, MCif mCifId, BigDecimal beginBalance,
-                          BigDecimal endBalance, BigDecimal currentBalance, RStatus rStatus, boolean isDeleted,
-                          Timestamp authorizationAt, MUser mUserAuthorizationBy) {
-        this.savingAccountId = savingAccountId;
-        this.accountNumber = accountNumber;
-        this.mCifId = mCifId;
-        this.beginBalance = beginBalance;
-        this.endBalance = endBalance;
-        this.currentBalance = currentBalance;
-        this.rStatus = rStatus;
-        this.isDeleted = isDeleted;
-        this.authorizationAt = authorizationAt;
-        this.mUserAuthorizationBy = mUserAuthorizationBy;
-
-    }
-
-    //Getter and Setter
-
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public MSaving getmSaving() {
-        return mSaving;
-    }
-
-    public void setmSaving(MSaving mSaving) {
-        this.mSaving = mSaving;
-    }
-
-    public String getSavingAccountId() {
-        return savingAccountId;
-    }
-
-    public void setSavingAccountId(String savingAccountId) {
-        this.savingAccountId = savingAccountId;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public MCif getmCifId() {
-        return mCifId;
-    }
-
-    public void setmCifId(MCif mCifId) {
-        this.mCifId = mCifId;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-
-    public void setIsDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-
-    public RStatus getrStatus() {
-        return rStatus;
-    }
-
-    public void setrStatus(RStatus rStatus) {
-        this.rStatus = rStatus;
-    }
-
-    public MUser getmUserAuthorizationBy() {
-        return mUserAuthorizationBy;
-    }
-
-    public void setmUserAuthorizationBy(MUser mUserAuthorizationBy) {
-        this.mUserAuthorizationBy = mUserAuthorizationBy;
-    }
-
-    public BigDecimal getBeginBalance() {
-        return beginBalance;
-    }
-
-    public void setBeginBalance(BigDecimal beginBalance) {
-        this.beginBalance = beginBalance;
-    }
-
-    public BigDecimal getEndBalance() {
-        return endBalance;
-    }
-
-    public void setEndBalance(BigDecimal endBalance) {
-        this.endBalance = endBalance;
-    }
-
-    public BigDecimal getCurrentBalance() {
-        return currentBalance;
-    }
-
-    public void setCurrentBalance(BigDecimal currentBalance) {
-        this.currentBalance = currentBalance;
-    }
-
-
-    public Timestamp getAuthorizationAt() {
-        return authorizationAt;
-    }
-
-    public void setAuthorizationAt(Timestamp authorizationAt) {
-        this.authorizationAt = authorizationAt;
-    }
-
-
 }
