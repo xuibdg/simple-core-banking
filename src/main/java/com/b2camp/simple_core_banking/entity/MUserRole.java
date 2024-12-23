@@ -1,9 +1,17 @@
 package com.b2camp.simple_core_banking.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "m_user_role", schema = "public")
 public class MUserRole {
 
@@ -21,36 +29,4 @@ public class MUserRole {
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
-
-    public String getUserRoleId() {
-        return userRoleId;
-    }
-
-    public void setUserRoleId(String userRoleId) {
-        this.userRoleId = userRoleId;
-    }
-
-    public String getRoleCode() {
-        return roleCode;
-    }
-
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
 }

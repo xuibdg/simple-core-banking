@@ -1,9 +1,15 @@
 package com.b2camp.simple_core_banking.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MCifResponse {
 
     private String cifId;
@@ -23,140 +29,4 @@ public class MCifResponse {
     private String authorizationBy;
     private String statusId;
     private String statusName;
-
-    public String getCifId() { return cifId; }
-
-    public void setCifId(String cifId) {
-        this.cifId = cifId;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getIdNumber() {
-        return idNumber;
-    }
-
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
-    }
-
-    public String getIdNumberType() {
-        return idNumberType;
-    }
-
-    public void setIdNumberType(String idNumberType) {
-        this.idNumberType = idNumberType;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpDateAt() {
-        return upDateAt;
-    }
-
-    public void setUpDateAt(Timestamp upDateAt) {
-        this.upDateAt = upDateAt;
-    }
-
-
-    public String getUpDateBy() {
-        return upDateBy;
-    }
-
-    public void setUpDateBy(String upDateBy) {
-        this.upDateBy = upDateBy;
-    }
-
-    public Timestamp getAuthorizationAt() {
-        return authorizationAt;
-    }
-
-    public void setAuthorizationAt(Timestamp authorizationAt) {
-        this.authorizationAt = authorizationAt;
-    }
-
-    public String getAuthorizationBy() {
-        return authorizationBy;
-    }
-
-    public void setAuthorizationBy(String authorizationBy) {
-        this.authorizationBy = authorizationBy;
-    }
-
-    public String getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(String statusId) {
-        this.statusId = statusId;
-    }
-
-
-    public Boolean getDeleted() {
-        return isDeleted;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public void getAuthorizationAt(Timestamp authorizationAt) {
-
-    }
 }
