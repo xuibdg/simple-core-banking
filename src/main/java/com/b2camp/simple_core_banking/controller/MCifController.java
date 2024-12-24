@@ -34,7 +34,7 @@ public class MCifController {
         return mCifService.findByCifId(cifId);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/Edit/{id}")
     public MCifResponse mCifRepository (@PathVariable String id,
                                           @RequestBody MCifRequest request){
         return mCifService.updateCif(id, request);

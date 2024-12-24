@@ -9,7 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +26,7 @@ import java.util.Optional;
 public class TSavingAccountController {
     private TSavingAccountService tSavingAccountService;
 
-    @Autowired
-    TSavingAccountController(TSavingAccountService tSavingAccountService) {
+    public TSavingAccountController(TSavingAccountService tSavingAccountService) {
         this.tSavingAccountService = tSavingAccountService;
     }
 
@@ -35,8 +41,8 @@ public class TSavingAccountController {
     }
 
     @PostMapping
-    public ResponseEntity<TSavingAccountResponse> create(@RequestBody TSavingAccountRequest request) {
-        TSavingAccountResponse response = tSavingAccountService.create(request);
+    public ResponseEntity<TSavingAccountRequest> create(@RequestBody TSavingAccountRequest request) {
+        TSavingAccountRequest response = tSavingAccountService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @GetMapping
@@ -49,8 +55,8 @@ public class TSavingAccountController {
         return tSavingAccountService.findBySavingAccountId(savingAccountId);
     }
 
-    @PutMapping("/{savingAccountId}")
-    public TSavingAccountResponse updateTSavingAccount(@PathVariable String savingAccountId,
+    @PutMapping("/edit/{savingAccountId}")
+    public TSavingAccountResponse updateTSavingAccountId(@PathVariable String savingAccountId,
                                                        @RequestBody TSavingAccountRequest request) {
         return tSavingAccountService.updateSavingAccount(savingAccountId, request);
     }
