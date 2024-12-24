@@ -7,7 +7,15 @@ import com.b2camp.simple_core_banking.repository.MCifRepository;
 import com.b2camp.simple_core_banking.service.MCifService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +41,7 @@ public class MCifController {
         return mCifService.findByCifId(cifId);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/Edit/{id}")
     public MCifResponse mCifRepository (@PathVariable String id,
                                           @RequestBody MCifRequest request){
         return mCifService.updateCif(id, request);
@@ -41,5 +49,15 @@ public class MCifController {
     @PostMapping
     public MCifResponse createCif (@RequestBody MCifRequest request){
         return mCifService.createCif(request);
+    }
+
+    @DeleteMapping("/{cifId}")
+    public String delete(@PathVariable String cifId) {
+        return mCifService.delete(cifId);
+    }
+
+    @PutMapping("/{cifId}")
+    public MCifResponse authorization(@PathVariable String cifId) {
+        return mCifService.authorization(cifId);
     }
 }

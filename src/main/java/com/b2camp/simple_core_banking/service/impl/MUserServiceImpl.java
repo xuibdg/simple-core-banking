@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 @Service
 @Slf4j
 public class  MUserServiceImpl implements MUserService {
@@ -87,14 +88,14 @@ public class  MUserServiceImpl implements MUserService {
         response.setUserName(mUser.getUserName());
         response.setEmail(mUser.getEmail());
         response.setFullname(mUser.getFullname());
-        response.setIsDeleted(mUser.isDeleted());
+        response.setDeleted(mUser.isDeleted());
         log.info("");
 
         // validasi biar ga error
         if (mUser.getMUserRole() != null) {
-            response.setUserRole(mUser.getMUserRole().getUserRoleId());
+            response.setUserRoleId(mUser.getMUserRole().getUserRoleId());
         } else {
-            response.setUserRole(null);
+            response.setUserRoleId(null);
         }
 
         return response;
