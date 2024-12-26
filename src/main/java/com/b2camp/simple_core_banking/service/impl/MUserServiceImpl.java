@@ -1,5 +1,6 @@
 package com.b2camp.simple_core_banking.service.impl;
 
+import com.b2camp.simple_core_banking.dto.LoginRequest;
 import com.b2camp.simple_core_banking.dto.MUserRequest;
 import com.b2camp.simple_core_banking.dto.MUserResponse;
 import com.b2camp.simple_core_banking.entity.MUser;
@@ -7,6 +8,7 @@ import com.b2camp.simple_core_banking.entity.MUserRole;
 import com.b2camp.simple_core_banking.repository.MUserRepository;
 import com.b2camp.simple_core_banking.repository.MUserRoleRepository;
 import com.b2camp.simple_core_banking.service.MUserService;
+import com.b2camp.simple_core_banking.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,12 @@ public class  MUserServiceImpl implements MUserService {
     @Autowired
     private MUserRoleRepository mUserRoleRepository;
 
+
+    @Override
+    public String login(LoginRequest request) {
+        String token = JwtUtil.generateToken(request.getUserName() + request.getPassword());
+        return "Generated Token: " + token;
+    }
 
     @Override
     public MUserResponse createUser(MUserRequest request) {

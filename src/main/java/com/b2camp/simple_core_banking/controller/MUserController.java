@@ -1,6 +1,7 @@
 package com.b2camp.simple_core_banking.controller;
 
 
+import com.b2camp.simple_core_banking.dto.LoginRequest;
 import com.b2camp.simple_core_banking.dto.MUserRequest;
 import com.b2camp.simple_core_banking.dto.MUserResponse;
 import com.b2camp.simple_core_banking.service.MUserService;
@@ -18,6 +19,11 @@ public class MUserController {
 
     MUserController(MUserService mUserService){
         this.mUserService = mUserService;
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest request) {
+        return mUserService.login(request);
     }
 
     @PostMapping
