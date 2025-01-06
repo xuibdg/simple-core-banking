@@ -15,7 +15,7 @@ public class MUserResponse {
     private String email;
     private String userName;
     private String userRoleId;
-    private String fullname;
+    private String fullName;
     private String createdBy;
     private LocalDateTime createdAt;
     private String updateBy;

@@ -20,8 +20,8 @@ public class MSaving {
     @Column(name = "saving_id", nullable = false)
     private String savingId;
 
-    @Column(name = "saving_cod")
-    private String savingCod;
+    @Column(name = "saving_code")
+    private String savingCode;
 
     @Column(name = "saving_name")
     private String savingName;

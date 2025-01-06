@@ -95,7 +95,7 @@ public class  MUserServiceImpl implements MUserService {
         response.setUserId(mUser.getUserId());
         response.setUserName(mUser.getUserName());
         response.setEmail(mUser.getEmail());
-        response.setFullname(mUser.getFullname());
+        response.setFullName(mUser.getFullname());
         response.setDeleted(mUser.isDeleted());
         log.info("");
 
