@@ -40,7 +40,7 @@ public class FilterInterceptor implements Filter {
         String authorizationHeader = httpRequest.getHeader("x-authorization");
 
         // Cek apakah header ada dan dimulai dengan "Bearer"
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("B2camp-")) {
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             httpResponse.getWriter().write("Missing or invalid Authorization header");
             return;

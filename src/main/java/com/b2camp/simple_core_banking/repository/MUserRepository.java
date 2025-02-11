@@ -17,4 +17,11 @@ public interface MUserRepository extends JpaRepository<MUser, String> {
 
 
     Optional<MUser> findByUserId(String userId);
+
+    @Query(value = "select * from m_user mu\n" +
+            "where user_name = :userName\n" +
+            "and \"password\" = :password\n" +
+            "and is_deleted is false", nativeQuery = true)
+    Optional<MUser> findLogin(String userName, String password);
+
 }

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MUserResponse {
+public class MUserResponse extends BaseApiResponse {
 
     private String userId;
     private String email;

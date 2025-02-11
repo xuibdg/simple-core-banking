@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
-public class MUserController {
+public class MUserController extends BaseCRUDController{
 
     private MUserService mUserService;
 
@@ -34,7 +34,7 @@ public class MUserController {
     @PutMapping("/{userId}")
     public MUserResponse createUser(@PathVariable String userId,
                                     @RequestBody MUserRequest request) {
-        return mUserService.updateUser(userId, request);
+        return buildBaseSuccessApiResponse(mUserService.updateUser(userId, request));
     }
 
     @GetMapping

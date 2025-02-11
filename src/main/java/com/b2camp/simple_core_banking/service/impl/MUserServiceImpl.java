@@ -9,6 +9,8 @@ import com.b2camp.simple_core_banking.repository.MUserRepository;
 import com.b2camp.simple_core_banking.repository.MUserRoleRepository;
 import com.b2camp.simple_core_banking.service.MUserService;
 import com.b2camp.simple_core_banking.utils.JwtUtil;
+import com.b2camp.simple_core_banking.utils.exception.BusinessException;
+import com.b2camp.simple_core_banking.utils.exception.GlobalErrorMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +33,9 @@ public class  MUserServiceImpl implements MUserService {
 
     @Override
     public String login(LoginRequest request) {
+        mUserRepository.findLogin(request.getUserName(), request.getPassword()).orElseThrow(() -> new BusinessException(GlobalErrorMapping.USER_NOT_FOUND, request.getUserName()));
         String token = JwtUtil.generateToken(request.getUserName() + request.getPassword());
-        return "Generated Token: " + token;
+        return "Generated Token: "+ "B2camp-" + token;
     }
 
     @Override
